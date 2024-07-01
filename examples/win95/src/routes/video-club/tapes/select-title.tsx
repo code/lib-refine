@@ -1,4 +1,9 @@
-import { getDefaultFilter, useNavigation, useTable } from "@refinedev/core";
+import {
+  getDefaultFilter,
+  useNavigation,
+  useSubscription,
+  useTable,
+} from "@refinedev/core";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Button, Separator } from "react95";
@@ -25,7 +30,7 @@ import {
 } from "@/components/icons";
 import { OPTIONS_YEAR } from "@/utils/options-year";
 import { getImagesUrl } from "@/utils/get-cdn-url";
-import { ExtendedVideoTitle } from "@/types";
+import type { ExtendedVideoTitle } from "@/types";
 
 type Props = {
   selectedTitle?: ExtendedVideoTitle | null;
@@ -53,6 +58,20 @@ export const VideoClubPageTapeSelectTitle = ({
     resource: "titles",
     meta: {
       select: "*, tapes(*), rentals(*)",
+    },
+  });
+
+  useSubscription({
+    channel: "tapes",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
+    },
+  });
+
+  useSubscription({
+    channel: "rentals",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
     },
   });
 
@@ -106,7 +125,7 @@ export const VideoClubPageTapeSelectTitle = ({
             <TableFilterInputContainer>
               <TableFilterInputLabel>Category:</TableFilterInputLabel>
               <TableFilterInputText
-                defaultValue={getDefaultFilter("genres", filters, "contains")}
+                defaultValue={getDefaultFilter("genres", filters, "ina")}
                 onChange={(e) => {
                   const value = e.target?.value?.trim();
                   setCurrent(1);
@@ -114,7 +133,7 @@ export const VideoClubPageTapeSelectTitle = ({
                     {
                       field: "genres",
                       value: value.split(",").map((v) => v.trim()),
-                      operator: "contains",
+                      operator: "ina",
                     },
                   ]);
                 }}

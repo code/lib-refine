@@ -1,6 +1,6 @@
 {
   "name": "@refinedev/devtools-internal",
-  "version": "1.1.9",
+  "version": "1.1.11",
   "private": false,
   "description": "refine devtools offers a set of features from monitoring to quickly prototyping a UI.",
   "repository": {
@@ -34,13 +34,13 @@
     "attw": "attw --pack .",
     "build": "tsup && node ../shared/generate-declarations.js",
     "dev": "tsup --watch",
-    "prepare": "pnpm -w build --scope @refinedev/devtools-internal",
+    "prepare": "pnpm build",
     "publint": "publint --strict=true --level=suggestion",
     "test": "jest --passWithNoTests --runInBand",
     "types": "node ../shared/generate-declarations.js"
   },
   "dependencies": {
-    "@refinedev/devtools-shared": "1.1.7",
+    "@refinedev/devtools-shared": "1.1.9",
     "@tanstack/react-query": "^4.10.1",
     "error-stack-parser": "^2.1.4"
   },

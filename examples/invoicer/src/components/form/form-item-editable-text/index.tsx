@@ -1,13 +1,13 @@
+import { type PropsWithChildren, useState } from "react";
 import {
   Button,
   Flex,
   Form,
-  FormItemProps,
+  type FormItemProps,
   Input,
   Skeleton,
   Typography,
 } from "antd";
-import { PropsWithChildren, useState } from "react";
 import { EditOutlined, EnterOutlined } from "@ant-design/icons";
 import { useStyles } from "./styled";
 
@@ -87,6 +87,7 @@ export const FormItemEditableText = ({
                   width: "40px",
                   height: "40px",
                 }}
+                // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
                 icon={<EditOutlined />}
                 onClick={handleEdit}
               />
@@ -99,6 +100,7 @@ export const FormItemEditableText = ({
             style={{
               width: "100%",
             }}
+            // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
             suffix={<EnterOutlined />}
             onKeyDown={(e) => {
               if (e.key === "Enter") {

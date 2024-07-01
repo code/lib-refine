@@ -1,6 +1,6 @@
 {
   "name": "@refinedev/kbar",
-  "version": "1.3.10",
+  "version": "1.3.12",
   "private": false,
   "description": "refine fully kbar(cmd+k/ctrl+k) integration. refine is a React-based framework for building internal tools, rapidly. It ships with Ant Design System, an enterprise-level UI toolkit.",
   "repository": {
@@ -34,7 +34,7 @@
     "attw": "attw --pack .",
     "build": "tsup && node ../shared/generate-declarations.js",
     "dev": "tsup --watch",
-    "prepare": "pnpm -w build --scope @refinedev/kbar",
+    "prepare": "pnpm build",
     "publint": "publint --strict=true --level=suggestion",
     "test": "jest --passWithNoTests --runInBand",
     "types": "node ../shared/generate-declarations.js"
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@esbuild-plugins/node-resolve": "^0.1.4",
-    "@refinedev/core": "^4.49.2",
+    "@refinedev/core": "^4.51.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@types/jest": "^29.2.4",

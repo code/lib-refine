@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { getDefaultFilter, useGo } from "@refinedev/core";
 import {
   CreateButton,
@@ -15,7 +15,7 @@ import { Avatar, Flex, Input, Select, Table, Typography } from "antd";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { API_URL } from "@/utils/constants";
 import { getRandomColorFromString } from "@/utils/get-random-color";
-import { Client } from "@/types";
+import type { Client } from "@/types";
 
 export const ClientsPageList = ({ children }: PropsWithChildren) => {
   const go = useGo();
@@ -91,6 +91,7 @@ export const ClientsPageList = ({ children }: PropsWithChildren) => {
             key="id"
             width={80}
             defaultFilteredValue={getDefaultFilter("id", filters)}
+            // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
             filterIcon={<SearchOutlined />}
             filterDropdown={(props) => {
               return (
@@ -145,6 +146,7 @@ export const ClientsPageList = ({ children }: PropsWithChildren) => {
               filters,
               "contains",
             )}
+            // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
             filterIcon={<SearchOutlined />}
             filterDropdown={(props) => {
               return (
@@ -204,7 +206,9 @@ export const ClientsPageList = ({ children }: PropsWithChildren) => {
                     src={src}
                     shape="square"
                     style={{
-                      backgroundColor: getRandomColorFromString(name),
+                      backgroundColor: src
+                        ? "none"
+                        : getRandomColorFromString(name),
                     }}
                   >
                     <Typography.Text>
@@ -228,6 +232,7 @@ export const ClientsPageList = ({ children }: PropsWithChildren) => {
                   <EditButton
                     hideText
                     recordItemId={record.id}
+                    // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
                     icon={<EyeOutlined />}
                   />
                   <DeleteButton hideText recordItemId={record.id} />

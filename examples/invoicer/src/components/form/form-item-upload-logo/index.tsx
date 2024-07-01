@@ -2,11 +2,11 @@ import { useMemo, useState } from "react";
 import { Avatar, Form, Skeleton, Typography, Upload } from "antd";
 import { getValueProps } from "@refinedev/strapi-v4";
 import { CloudUploadOutlined } from "@ant-design/icons";
-import { RcFile } from "antd/lib/upload";
+import type { RcFile } from "antd/lib/upload";
 import { axiosInstance } from "@/providers/axios";
 import { getRandomColorFromString } from "@/utils/get-random-color";
 import { API_URL, TOKEN_KEY } from "@/utils/constants";
-import { Media, UploadResponse } from "@/types";
+import type { Media, UploadResponse } from "@/types";
 import { useStyles } from "./styled";
 
 type Props = {
@@ -29,7 +29,6 @@ export const FormItemUploadLogo = ({
   const form = Form.useFormInstance();
   const fieldValue = Form.useWatch(formName, form) as Media | UploadResponse;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive
   const src = useMemo(() => {
     if (!fieldValue) return null;
 
@@ -83,11 +82,6 @@ export const FormItemUploadLogo = ({
     }
   };
 
-  console.log({
-    src,
-    fieldValue,
-  });
-
   return (
     <div className={styles.container}>
       <Form.Item
@@ -125,6 +119,7 @@ export const FormItemUploadLogo = ({
             }}
           >
             <Avatar
+              key={src}
               size={96}
               shape="square"
               src={src}
@@ -137,9 +132,8 @@ export const FormItemUploadLogo = ({
                 zIndex: 1,
                 cursor: "pointer",
                 borderRadius: "6px",
-                ...((error || !src) && {
-                  background: getRandomColorFromString(label),
-                }),
+                background:
+                  error || !src ? getRandomColorFromString(label) : "none",
               }}
             >
               {<Typography.Text>{label[0].toUpperCase()}</Typography.Text>}
@@ -147,6 +141,7 @@ export const FormItemUploadLogo = ({
 
             <div className={styles.overlayContainer}>
               <div className={styles.overlayIconContainer}>
+                {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
                 <CloudUploadOutlined className={styles.overlayIcon} />
               </div>
             </div>

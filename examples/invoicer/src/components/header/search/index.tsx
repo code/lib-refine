@@ -4,9 +4,9 @@ import { AutoComplete, Avatar, Flex, Input, Typography } from "antd";
 import { useList, useNavigation } from "@refinedev/core";
 import { Link } from "react-router-dom";
 import { API_URL } from "@/utils/constants";
-import { Account, Client } from "@/types";
-import { useStyles } from "./styled";
 import { getRandomColorFromString } from "@/utils/get-random-color";
+import type { Account, Client } from "@/types";
+import { useStyles } from "./styled";
 
 type Option =
   | (Account & {
@@ -128,6 +128,7 @@ export const Search = () => {
         size="middle"
         placeholder="Search"
         suffix={<div className={styles.inputSuffix}>/</div>}
+        // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
         prefix={<SearchOutlined className={styles.inputPrefix} />}
       />
     </AutoComplete>

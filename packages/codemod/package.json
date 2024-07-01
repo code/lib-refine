@@ -1,6 +1,6 @@
 {
   "name": "@refinedev/codemod",
-  "version": "4.1.8",
+  "version": "4.1.10",
   "private": false,
   "description": "refine Codemod CLI. refine is a React-based framework for building internal tools, rapidly. It ships with Ant Design System, an enterprise-level UI toolkit.",
   "repository": {
@@ -20,7 +20,8 @@
   "scripts": {
     "build": "tsc -d -p tsconfig.json",
     "dev": "tsc -w -d -p tsconfig.json",
-    "jscodeshift": "jscodeshift -d --transform=src/transformations/refine1-to-refine2.ts"
+    "jscodeshift": "jscodeshift -d --transform=src/transformations/refine1-to-refine2.ts",
+    "prepare": "pnpm build"
   },
   "dependencies": {
     "@npmcli/package-json": "3.0.0",

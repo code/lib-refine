@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getDefaultFilter, useTable } from "@refinedev/core";
+import { getDefaultFilter, useSubscription, useTable } from "@refinedev/core";
 import {
   Hourglass,
   Select,
@@ -17,7 +17,7 @@ import { VideoClubLayoutSubPage } from "@/components/layout";
 import { Pagination } from "@/components/pagination";
 import { DangerIcon } from "@/components/icons";
 import { OPTIONS_YEAR } from "@/utils/options-year";
-import { ExtendedVideoTitle } from "@/types";
+import type { ExtendedVideoTitle } from "@/types";
 
 export const VideoClubPageBrowseTitles = () => {
   const navigate = useNavigate();
@@ -35,10 +35,23 @@ export const VideoClubPageBrowseTitles = () => {
       select: "*, tapes(*), rentals(*)",
     },
   });
-
   const titles = titlesQueryResult?.data?.data || [];
   const titlesIsLoading = titlesQueryResult?.isLoading || false;
   const isLoading = titlesIsLoading;
+
+  useSubscription({
+    channel: "tapes",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
+    },
+  });
+
+  useSubscription({
+    channel: "rentals",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
+    },
+  });
 
   return (
     <VideoClubLayoutSubPage
@@ -85,7 +98,7 @@ export const VideoClubPageBrowseTitles = () => {
           <FilterInputContainer>
             <FilterInputLabel>Category:</FilterInputLabel>
             <FilterInputText
-              defaultValue={getDefaultFilter("genres", filters, "contains")}
+              defaultValue={getDefaultFilter("genres", filters, "ina")}
               onChange={(e) => {
                 const value = e.target?.value?.trim();
                 setCurrent(1);
@@ -93,7 +106,7 @@ export const VideoClubPageBrowseTitles = () => {
                   {
                     field: "genres",
                     value: value.split(",").map((v) => v.trim()),
-                    operator: "contains",
+                    operator: "ina",
                   },
                 ]);
               }}

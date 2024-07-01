@@ -2,13 +2,13 @@ import {
   Button,
   Flex,
   Form,
-  FormItemProps,
+  type FormItemProps,
   Select,
-  SelectProps,
+  type SelectProps,
   Skeleton,
   Typography,
 } from "antd";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 import { useStyles } from "./styled";
 
@@ -27,6 +27,7 @@ export const FormItemEditableSelect = ({
   icon,
   formItemProps,
   selectProps,
+  // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
   editIcon = <EditOutlined />,
   loading,
   onEditClick,

@@ -1,6 +1,6 @@
 {
   "name": "@refinedev/devtools-ui",
-  "version": "1.1.22",
+  "version": "1.1.25",
   "private": false,
   "description": "refine devtools offers a set of features from monitoring to quickly prototyping a UI.",
   "repository": {
@@ -38,7 +38,7 @@
     "attw": "attw --pack . --exclude-entrypoints style.css",
     "build": "tsup && node ../shared/generate-declarations.js",
     "dev": "tsup --watch",
-    "prepare": "pnpm -w build --scope @refinedev/devtools-ui",
+    "prepare": "pnpm build",
     "publint": "publint --strict=true --level=suggestion",
     "test": "jest --passWithNoTests --runInBand",
     "types": "node ../shared/generate-declarations.js"
@@ -47,7 +47,7 @@
     "@fireworks-js/react": "^2.10.7",
     "@headlessui/react": "^1.7.17",
     "@ory/client": "^1.5.2",
-    "@refinedev/devtools-shared": "1.1.7",
+    "@refinedev/devtools-shared": "1.1.9",
     "@tanstack/react-table": "^8.2.6",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.7",

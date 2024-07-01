@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { Button, Flex, Form, Upload, theme } from "antd";
 import { CloudUploadOutlined, PictureOutlined } from "@ant-design/icons";
 import { getValueProps } from "@refinedev/strapi-v4";
-import { RcFile, UploadChangeParam } from "antd/lib/upload";
+import type { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { axiosInstance } from "@/providers/axios";
 import { API_URL, TOKEN_KEY } from "@/utils/constants";
-import { Media, UploadResponse } from "@/types";
+import type { Media, UploadResponse } from "@/types";
 import { useStyles } from "./styled";
 
 type Props = {
@@ -23,7 +23,6 @@ export const FormItemUploadLogoDraggable = ({
   const form = Form.useFormInstance();
   const fieldValue = Form.useWatch(name, form) as Media | UploadResponse;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive
   const src = useMemo(() => {
     if (!fieldValue) return null;
 
@@ -126,6 +125,7 @@ export const FormItemUploadLogoDraggable = ({
               />
             )}
             {!src && (
+              // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
               <PictureOutlined
                 style={{
                   fontSize: "48px",
@@ -162,6 +162,7 @@ export const FormItemUploadLogoDraggable = ({
             style={{
               width: "148px",
             }}
+            // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
             icon={<CloudUploadOutlined />}
           >
             Upload Logo

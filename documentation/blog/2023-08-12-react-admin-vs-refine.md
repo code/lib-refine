@@ -187,9 +187,8 @@ These small features lead to a huge difference in the development experience, yo
 
 **Examples**
 
-Check out the following examples of multitenant apps built with Refine:
+Check out the following example of multitenant app built with Refine:
 
-- [Multitenancy with Refine + Appwrite](/docs/guides-concepts/multi-tenancy/#appwrite)
 - [Multitenancy with Refine + Strapi](/docs/guides-concepts/multi-tenancy/#strapi)
 
 ## Differences in supported UI frameworks between Refine and react-admin,
@@ -458,7 +457,7 @@ To sum it up:
 
 - Refine is not only an open-core solution but also a performance-driven framework with it's architecture.
 - Its headless nature keeps your project well within the realm of vanilla React, making integration seamless.This architecture ensures that your project remains firmly rooted in vanilla React, simplifying integration.
-- One of the most importatnt aspect is that Refine empowers you with free enterprise-level features, similar to those found in react-admin's enterprise package, without any additional financial commitment.
+- One of the most important aspect is that Refine empowers you with free enterprise-level features, similar to those found in react-admin's enterprise package, without any additional financial commitment.
 
 From our point of view, this combination of capabilities, coupled with its user-friendly nature and and remarkably small bundle size positions Refine as an perfect choice for web developers.
 
