@@ -19,12 +19,12 @@ import {
   ListButton,
   Breadcrumb,
   PageHeader,
-  ListButtonProps,
-  EditButtonProps,
-  DeleteButtonProps,
-  RefreshButtonProps,
+  type ListButtonProps,
+  type EditButtonProps,
+  type DeleteButtonProps,
+  type RefreshButtonProps,
 } from "@components";
-import { ShowProps } from "../types";
+import type { ShowProps } from "../types";
 
 /**
  * `<Show>` provides us a layout for displaying the page.
@@ -133,7 +133,6 @@ export const Show: React.FC<ShowProps> = ({
   return (
     <div {...(wrapperProps ?? {})}>
       <PageHeader
-        ghost={false}
         backIcon={goBackFromProps}
         onBack={
           action !== "list" && typeof action !== "undefined"

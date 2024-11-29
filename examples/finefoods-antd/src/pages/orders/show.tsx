@@ -1,5 +1,5 @@
 import { useShow, useTranslate, useUpdate } from "@refinedev/core";
-import { IOrder } from "../../interfaces";
+import type { IOrder } from "../../interfaces";
 import { List, ListButton } from "@refinedev/antd";
 import { Button, Col, Divider, Flex, Row, Skeleton } from "antd";
 import { CloseCircleOutlined, LeftOutlined } from "@ant-design/icons";
@@ -13,16 +13,17 @@ import {
 
 export const OrderShow = () => {
   const t = useTranslate();
-  const { queryResult } = useShow<IOrder>();
+  const { query: queryResult } = useShow<IOrder>();
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  const { mutate } = useUpdate();
+  const { mutate } = useUpdate({
+    resource: "orders",
+    id: record?.id.toString(),
+  });
 
   const handleMutate = (status: { id: number; text: string }) => {
     if (record) {
       mutate({
-        resource: "orders",
-        id: record.id.toString(),
         values: {
           status,
         },

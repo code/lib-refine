@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 
 import {
   fireEvent,
@@ -8,7 +8,7 @@ import {
   TestWrapper,
   waitFor,
 } from "@test";
-import { RegisterPageProps } from "@refinedev/core";
+import type { RegisterPageProps } from "@refinedev/core";
 
 export const pageRegisterTests = (
   RegisterPage: FC<RegisterPageProps<any, any, any>>,
@@ -335,6 +335,50 @@ export const pageRegisterTests = (
           name: /sign in/i,
         }),
       ).toHaveAttribute("href", "/login");
+    });
+
+    it("should should accept 'mutationVariables'", async () => {
+      const registerMock = jest.fn().mockResolvedValue({ success: true });
+
+      const { getByRole, getByLabelText } = render(
+        <RegisterPage
+          mutationVariables={{
+            foo: "bar",
+            xyz: "abc",
+          }}
+        />,
+        {
+          wrapper: TestWrapper({
+            authProvider: {
+              ...mockAuthProvider,
+              register: registerMock,
+            },
+          }),
+        },
+      );
+
+      fireEvent.change(getByLabelText(/email/i), {
+        target: { value: "demo@refine.dev" },
+      });
+
+      fireEvent.change(getByLabelText(/password/i), {
+        target: { value: "demo" },
+      });
+
+      fireEvent.click(
+        getByRole("button", {
+          name: /sign up/i,
+        }),
+      );
+
+      await waitFor(() => {
+        expect(registerMock).toHaveBeenCalledWith({
+          foo: "bar",
+          xyz: "abc",
+          email: "demo@refine.dev",
+          password: "demo",
+        });
+      });
     });
   });
 };

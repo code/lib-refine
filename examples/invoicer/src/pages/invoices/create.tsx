@@ -14,7 +14,7 @@ import {
   Typography,
 } from "antd";
 import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Invoice, Service } from "@/types";
+import type { Invoice, Service } from "@/types";
 import { useStyles } from "./create.styled";
 
 export const InvoicesPageCreate = () => {
@@ -208,7 +208,6 @@ export const InvoicesPageCreate = () => {
                   <Row>
                     {services.map((service, index) => {
                       return (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: We don't have a unique key for each service item when we create a new one
                         <Fragment key={index}>
                           <Col
                             xs={{ span: 7 }}

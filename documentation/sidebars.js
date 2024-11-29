@@ -56,7 +56,7 @@ module.exports = {
         "guides-concepts/notifications/index",
         "guides-concepts/realtime/index",
         "guides-concepts/audit-logs/index",
-        "guides-concepts/multi-tenancy/index",
+        "guides-concepts/multitenancy/index",
         "guides-concepts/import-export/index",
         "guides-concepts/i18n/index",
         "guides-concepts/usage-with-existing-projects/index",
@@ -221,6 +221,12 @@ module.exports = {
             "routing/integrations/next-js/index",
             "routing/integrations/remix/index",
           ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "Components",
+          items: ["routing/components/link/index"],
         },
         {
           type: "category",
@@ -894,7 +900,11 @@ module.exports = {
       type: "category",
       label: "Enterprise Edition",
       className: "category-as-header",
-      items: ["enterprise-edition/okta/index"],
+      items: [
+        "enterprise-edition/okta/index",
+        "enterprise-edition/devtools/index",
+        "enterprise-edition/multitenancy/index",
+      ],
     },
     // Migration Guide
     {

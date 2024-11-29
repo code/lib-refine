@@ -5,15 +5,15 @@ import {
   useLink,
   useRouterContext,
   useRegister,
-  RegisterPageProps,
-  RegisterFormTypes,
-  BaseRecord,
-  HttpError,
+  type RegisterPageProps,
+  type RegisterFormTypes,
+  type BaseRecord,
+  type HttpError,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   Divider,
   FormControl,
@@ -28,7 +28,7 @@ import {
 import { useForm } from "@refinedev/react-hook-form";
 
 import { layoutProps, cardProps } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 import { ThemedTitleV2 } from "@components";
 
 type RegisterProps = RegisterPageProps<
@@ -46,6 +46,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   formProps,
   title,
   hideForm,
+  mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
 
@@ -80,6 +81,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 leftIcon={<>{provider?.icon}</>}
                 onClick={() =>
                   mutate({
+                    ...mutationVariables,
                     providerName: provider.name,
                   })
                 }
@@ -136,7 +138,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               return onSubmit(data);
             }
 
-            return mutate(data);
+            return mutate({ ...mutationVariables, ...data });
           })}
         >
           <FormControl mt="6" isInvalid={!!errors?.email}>
@@ -195,8 +197,11 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             >
               <span>
                 {translate(
-                  "pages.login.buttons.haveAccount",
-                  "Have an account?",
+                  "pages.register.buttons.haveAccount",
+                  translate(
+                    "pages.login.buttons.haveAccount",
+                    "Have an account?",
+                  ),
                 )}
               </span>
               <ChakraLink
@@ -206,7 +211,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 as={Link}
                 to="/login"
               >
-                {translate("pages.login.signin", "Sign in")}
+                {translate(
+                  "pages.register.signin",
+                  translate("pages.login.signin", "Sign in"),
+                )}
               </ChakraLink>
             </Box>
           )}
@@ -217,8 +225,8 @@ export const RegisterPage: React.FC<RegisterProps> = ({
         <Box mt={6} textAlign="center">
           <span>
             {translate(
-              "pages.login.buttons.noAccount",
-              "Don’t have an account?",
+              "pages.register.buttons.haveAccount",
+              "Have an account?",
             )}
           </span>
           <ChakraLink
@@ -228,7 +236,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             fontWeight="bold"
             to="/login"
           >
-            {translate("pages.login.signin", "Sign in")}
+            {translate(
+              "pages.register.signin",
+              translate("pages.login.signin", "Sign in"),
+            )}
           </ChakraLink>
         </Box>
       )}

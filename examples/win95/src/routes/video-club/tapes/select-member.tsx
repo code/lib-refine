@@ -25,7 +25,7 @@ import {
 } from "@/components/icons";
 import { hasActiveRental } from "@/utils/has-active-rental";
 import { getImagesUrl } from "@/utils/get-cdn-url";
-import { ExtendedMember } from "@/types";
+import type { ExtendedMember } from "@/types";
 
 type Props = {
   variant: "rent" | "return";
@@ -40,7 +40,7 @@ export const VideoClubPageTapeSelectMember = (props: Props) => {
   const { create } = useNavigation();
 
   const {
-    tableQueryResult: membersQueryResult,
+    tableQuery: membersQueryResult,
     pageCount,
     current,
     setCurrent,

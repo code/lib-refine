@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { useActiveAuthProvider } from "@definitions/helpers";
 import { useTranslate, useUpdatePassword } from "@hooks";
 
-import { DivPropsType, FormPropsType } from "../..";
-import { UpdatePasswordFormTypes, UpdatePasswordPageProps } from "../../types";
+import type { DivPropsType, FormPropsType } from "../..";
+import type {
+  UpdatePasswordFormTypes,
+  UpdatePasswordPageProps,
+} from "../../types";
 
 type UpdatePasswordProps = UpdatePasswordPageProps<
   DivPropsType,
@@ -18,6 +21,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
   renderContent,
   formProps,
   title = undefined,
+  mutationVariables,
 }) => {
   const translate = useTranslate();
 
@@ -40,6 +44,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
         onSubmit={(e) => {
           e.preventDefault();
           updatePassword({
+            ...mutationVariables,
             password: newPassword,
             confirmPassword,
           });

@@ -1,5 +1,79 @@
 # @refinedev/devtools-internal
 
+## 1.1.14
+
+### Patch Changes
+
+- [#6165](https://github.com/refinedev/refine/pull/6165) [`ccddff6eba23286d4025a7301de3ebfc24b1b633`](https://github.com/refinedev/refine/commit/ccddff6eba23286d4025a7301de3ebfc24b1b633) Thanks [@aliemir](https://github.com/aliemir)! - fix(devtools-internal): fix noop return on hooks for production builds
+
+  Currently, `@refinedev/devtools-internal` returns noop function when bundled for production, yet the notation is not correctly interpreted by some bundlers. This PR fixes the issue by moving the empty return and noop functions to a separate definition.
+
+  [Resolves #6030](https://github.com/refinedev/refine/issues/6030)
+
+- [#6185](https://github.com/refinedev/refine/pull/6185) [`603c73eb7d376fc2357a577f5921f844a8f444e4`](https://github.com/refinedev/refine/commit/603c73eb7d376fc2357a577f5921f844a8f444e4) Thanks [@aliemir](https://github.com/aliemir)! - feat(devtools): ability to change the port of the devtools server
+
+  Now users can change the port of the devtools server by setting the `REFINE_DEVTOOLS_PORT` environment variable. Previously, the port was hardcoded to "5001" and could not be changed.
+
+  If you're using `@refinedev/cli`'s runner commands to start your development server, `REFINE_DEVTOOLS_PORT` will be propagated to your app with appropriate prefix. E.g. if you're using Vite, the environment variable will be `VITE_REFINE_DEVTOOLS_PORT` and it will be used by the `@refinedev/devtools`'s `<DevtoolsProvider />` component to connect to the devtools server.
+
+  - In Next.js apps, it will be prefixed with `NEXT_PUBLIC_`
+  - In Craco and Create React App apps, it will be prefixed with `REACT_APP_`
+  - In Remix apps and other custom setups, the environment variable will be used as is.
+
+  In some scenarios where the environment variables are not passed to the browser, you may need to manually set the Refine Devtools URL in the `<DevtoolsProvider />` component via the `url` prop. Remix apps do not automatically pass environment variables to the browser, so you will need to set the URL manually. If not set, the default URL will be used.
+
+  While the port can be changed, this feature also allows users to host the devtools server on a different machine or domain and provide the `<DevtoolsProvider />` with the custom domain URL. This such case will be useful if you're dockerizing your app and devtools server separately.
+
+  **Enterprise Edition**: Refine Devtools running on ports other than "5001" is only available in the Enterprise Edition. If you're using the Community Edition, Refine Devtools will not work if the port is changed.
+
+  [Resolves #5111](https://github.com/refinedev/refine/issues/5111)
+
+- Updated dependencies [[`603c73eb7d376fc2357a577f5921f844a8f444e4`](https://github.com/refinedev/refine/commit/603c73eb7d376fc2357a577f5921f844a8f444e4)]:
+  - @refinedev/devtools-shared@1.1.12
+
+## 1.1.13
+
+### Patch Changes
+
+- Updated dependencies [[`8bc2c1c6790d1e098ce0d98e01f608e3310f7b4a`](https://github.com/refinedev/refine/commit/8bc2c1c6790d1e098ce0d98e01f608e3310f7b4a), [`8bc2c1c6790d1e098ce0d98e01f608e3310f7b4a`](https://github.com/refinedev/refine/commit/8bc2c1c6790d1e098ce0d98e01f608e3310f7b4a)]:
+  - @refinedev/devtools-shared@1.1.11
+
+## 1.1.11
+
+### Patch Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - fix(devtools-internal): broken env conditional in useQuerySubscription hook
+
+  When using Refine with React Native, `process.env.NODE_ENV !== "development" ? () => ({}) : () => {...}` conditional in `useQuerySubscription` hook was causing a syntax error. This PR fixes the issue by explicitly returning an empty object on non-development environments.
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+- Updated dependencies [[`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046), [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046), [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046)]:
+  - @refinedev/devtools-shared@1.1.9
+
+## 1.1.10
+
+### Patch Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`a1e36e6e909a91bc6218478f136b49a8e82a7e32`](https://github.com/refinedev/refine/commit/a1e36e6e909a91bc6218478f136b49a8e82a7e32) Thanks [@aliemir](https://github.com/aliemir)! - fix(devtools-internal): broken env conditional in useQuerySubscription hook
+
+  When using Refine with React Native, `process.env.NODE_ENV !== "development" ? () => ({}) : () => {...}` conditional in `useQuerySubscription` hook was causing a syntax error. This PR fixes the issue by explicitly returning an empty object on non-development environments.
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d) Thanks [@aliemir](https://github.com/aliemir)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+- Updated dependencies [[`bb89dc34bf6ef061d0bcdcf0cb3173fe7014ae5e`](https://github.com/refinedev/refine/commit/bb89dc34bf6ef061d0bcdcf0cb3173fe7014ae5e), [`6c22ece19f44ca2b99ad70543f9ee40b4b139863`](https://github.com/refinedev/refine/commit/6c22ece19f44ca2b99ad70543f9ee40b4b139863), [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d)]:
+  - @refinedev/devtools-shared@1.1.8
+
 ## 1.1.9
 
 ### Patch Changes

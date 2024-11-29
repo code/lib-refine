@@ -1,5 +1,54 @@
 # @refinedev/appwrite
 
+## 7.0.1
+
+### Patch Changes
+
+- [#6256](https://github.com/refinedev/refine/pull/6256) [`7ac2fc2013c8f38741831d3b65b23abe5f6fe1b2`](https://github.com/refinedev/refine/commit/7ac2fc2013c8f38741831d3b65b23abe5f6fe1b2) Thanks [@soranoo](https://github.com/soranoo)! - feat(appwrite): add support to conditional filters and missing logical filters
+
+  Add Support to `and`, `or`, `between`, `null`, `nnull`, `startswith` and `endswith` operators
+
+  [Resolves #6252](https://github.com/refinedev/refine/issues/6252)
+
+## 7.0.0
+
+### Major Changes
+
+- [#6138](https://github.com/refinedev/refine/pull/6138) [`d4809d6e9cfd7b311ab8ba1fa27c21cb50e1bc17`](https://github.com/refinedev/refine/commit/d4809d6e9cfd7b311ab8ba1fa27c21cb50e1bc17) Thanks [@soranoo](https://github.com/soranoo)! - feat(package/appwrite): update `Appwrite` SDK to `v15`
+
+  Updated `appwrite` SDK version to `v15` to match latest server version. Depending on your server version upgrading to this version should be safe but may require some changes in your codebase if you are using `appwrite` SDK directly.
+
+  If you're using the `data-provider-appwrite` example as base or created your app using the `create-refine-app` CLI, your auth provider implementation may require a small change in the `login` method:
+
+  ```diff
+  -      await account.createEmailSession(email, password);
+  +      await account.createEmailPasswordSession(email, password);
+  ```
+
+  [Resolves #6090](https://github.com/refinedev/refine/issues/6090)
+
+## 6.5.3
+
+### Patch Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+## 6.5.2
+
+### Patch Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d) Thanks [@aliemir](https://github.com/aliemir)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
 ## 6.5.1
 
 ### Patch Changes

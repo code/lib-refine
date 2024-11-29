@@ -6,8 +6,13 @@ export const getProjectType = (platform?: ProjectTypes): ProjectTypes => {
     return platform;
   }
   // read dependencies from package.json
-  const dependencies = getDependencies();
-  const devDependencies = getDevDependencies();
+  let dependencies: string[] = [];
+  let devDependencies: string[] = [];
+
+  try {
+    dependencies = getDependencies();
+    devDependencies = getDevDependencies();
+  } catch (error) {}
 
   // check for craco
   // craco and react-scripts installs together. We need to check for craco first
@@ -36,6 +41,11 @@ export const getProjectType = (platform?: ProjectTypes): ProjectTypes => {
     dependencies.includes("@remix-run/react") ||
     devDependencies.includes("@remix-run/react")
   ) {
+    // check for remix-vite
+    if (dependencies.includes("vite") || devDependencies.includes("vite")) {
+      return ProjectTypes.REMIX_VITE;
+    }
+
     return ProjectTypes.REMIX;
   }
 
@@ -76,4 +86,19 @@ export const getUIFramework = (): UIFrameworks | undefined => {
   }
 
   return;
+};
+
+export const getDevtoolsEnvKeyByProjectType = (
+  projectType: ProjectTypes,
+): string => {
+  switch (projectType) {
+    case ProjectTypes.REACT_SCRIPT:
+      return "REACT_APP_REFINE_DEVTOOLS_PORT";
+    case ProjectTypes.NEXTJS:
+      return "NEXT_PUBLIC_REFINE_DEVTOOLS_PORT";
+    case ProjectTypes.VITE:
+      return "VITE_REFINE_DEVTOOLS_PORT";
+    default:
+      return "REFINE_DEVTOOLS_PORT";
+  }
 };

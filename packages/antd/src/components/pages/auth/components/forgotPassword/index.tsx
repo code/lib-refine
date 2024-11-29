@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  ForgotPasswordPageProps,
-  ForgotPasswordFormTypes,
+  type ForgotPasswordPageProps,
+  type ForgotPasswordFormTypes,
   useRouterType,
   useLink,
 } from "@refinedev/core";
@@ -14,9 +14,9 @@ import {
   Form,
   Input,
   Button,
-  LayoutProps,
-  CardProps,
-  FormProps,
+  type LayoutProps,
+  type CardProps,
+  type FormProps,
   theme,
 } from "antd";
 import {
@@ -52,6 +52,7 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm<ForgotPasswordFormTypes>();
@@ -104,7 +105,9 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
       <Form<ForgotPasswordFormTypes>
         layout="vertical"
         form={form}
-        onFinish={(values) => forgotPassword(values)}
+        onFinish={(values) =>
+          forgotPassword({ ...values, ...mutationVariables })
+        }
         requiredMark={false}
         {...formProps}
       >
@@ -151,8 +154,11 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
               }}
             >
               {translate(
-                "pages.register.buttons.haveAccount",
-                "Have an account? ",
+                "pages.forgotPassword.buttons.haveAccount",
+                translate(
+                  "pages.register.buttons.haveAccount",
+                  "Have an account? ",
+                ),
               )}{" "}
               <ActiveLink
                 style={{
@@ -161,7 +167,10 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
                 }}
                 to="/login"
               >
-                {translate("pages.login.signin", "Sign in")}
+                {translate(
+                  "pages.forgotPassword.signin",
+                  translate("pages.login.signin", "Sign in"),
+                )}
               </ActiveLink>
             </Typography.Text>
           )}

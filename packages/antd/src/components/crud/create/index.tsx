@@ -14,9 +14,9 @@ import {
   Breadcrumb,
   SaveButton,
   PageHeader,
-  SaveButtonProps,
+  type SaveButtonProps,
 } from "@components";
-import { CreateProps } from "../types";
+import type { CreateProps } from "../types";
 
 /**
  * `<Create>` provides us a layout to display the page.
@@ -72,7 +72,6 @@ export const Create: React.FC<CreateProps> = ({
   return (
     <div {...(wrapperProps ?? {})}>
       <PageHeader
-        ghost={false}
         backIcon={goBackFromProps}
         onBack={
           action !== "list" || typeof action !== "undefined"

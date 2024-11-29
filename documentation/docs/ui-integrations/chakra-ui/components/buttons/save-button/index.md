@@ -23,7 +23,7 @@ const Wrapper = ({ children }) => {
 };
 ```
 
-`<SaveButton>` uses Chakra UI's [`<Button>`](https://chakra-ui.com/docs/components/button/usage) component. It uses it for presantation purposes only. Some of the hooks that Refine has adds features to this button.
+`<SaveButton>` uses Chakra UI's [`<Button>`](https://www.chakra-ui.com/docs/components/button#usage) component. It uses it for presantation purposes only. Some of the hooks that Refine has adds features to this button.
 
 :::simple Good to know
 
@@ -54,7 +54,7 @@ import { useForm } from "@refinedev/react-hook-form";
 
 const PostEdit: React.FC = () => {
   const {
-    refineCore: { formLoading, queryResult },
+    refineCore: { formLoading, query },
     // highlight-next-line
     saveButtonProps,
     register,
@@ -64,8 +64,8 @@ const PostEdit: React.FC = () => {
 
   const { options } = useSelect({
     resource: "categories",
-    defaultValue: queryResult?.data?.data.category.id,
-    queryOptions: { enabled: !!queryResult?.data?.data.category.id },
+    defaultValue: query?.data?.data.category.id,
+    queryOptions: { enabled: !!query?.data?.data.category.id },
   });
 
   useEffect(() => {

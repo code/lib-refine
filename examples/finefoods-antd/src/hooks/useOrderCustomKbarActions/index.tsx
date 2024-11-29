@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { useTranslate, useUpdate } from "@refinedev/core";
 import {
-  Action,
+  type Action,
   createAction,
   Priority,
   useRegisterActions,
 } from "@refinedev/kbar";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
-import { IOrder } from "../../interfaces";
+import type { IOrder } from "../../interfaces";
 
 export const useOrderCustomKbarActions = (order?: IOrder): void => {
   const t = useTranslate();
-  const { mutate } = useUpdate();
+  const { mutate } = useUpdate({
+    resource: "orders",
+    id: order?.id.toString(),
+    mutationOptions: {
+      onSuccess: () => setActions([]),
+    },
+  });
 
   const canAcceptOrder = order?.status.text === "Pending";
   const canRejectOrder =
@@ -24,18 +30,11 @@ export const useOrderCustomKbarActions = (order?: IOrder): void => {
 
   const handleMutate = (status: { id: number; text: string }) => {
     if (order) {
-      mutate(
-        {
-          resource: "orders",
-          id: order.id.toString(),
-          values: {
-            status,
-          },
+      mutate({
+        values: {
+          status,
         },
-        {
-          onSuccess: () => setActions([]),
-        },
-      );
+      });
     }
   };
 
@@ -75,5 +74,6 @@ export const useOrderCustomKbarActions = (order?: IOrder): void => {
     }
     setActions(preActions);
   }, [order]);
+
   useRegisterActions(actions, [actions]);
 };

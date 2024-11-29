@@ -4,7 +4,7 @@ import { Popover, Transition } from "@headlessui/react";
 import clsx from "clsx";
 
 import { ChevronDownIcon } from "../icons/chevron-down";
-import { NavbarPopoverItemType } from "./constants";
+import type { NavbarPopoverItemType } from "./constants";
 import { PointIcon } from "../icons/popover";
 
 type NavbarPopoverItemProps = {
@@ -47,6 +47,7 @@ export const NavbarPopoverItem: React.FC<NavbarPopoverItemProps> = ({
               "inline-flex items-center",
               "text-sm leading-6",
               "font-normal",
+              "whitespace-nowrap",
             )}
           >
             <span

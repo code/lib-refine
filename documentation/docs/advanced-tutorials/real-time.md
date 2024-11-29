@@ -18,7 +18,7 @@ We need to install the Ably live provider package from **Refine**.
 
 :::caution
 
-To make this example more visual, we used the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/refine-antd) package. If you are using Refine headless, you need to provide the components, hooks, or helpers imported from the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/refine-antd) package.
+To make this example more visual, we used the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/antd) package. If you are using Refine headless, you need to provide the components, hooks, or helpers imported from the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/antd) package.
 
 :::
 
@@ -144,7 +144,7 @@ export const PostEdit: React.FC = () => {
   >();
   //highlight-end
 
-  const { formProps, saveButtonProps, queryResult } = useForm<IPost>({
+  const { formProps, saveButtonProps, query } = useForm<IPost>({
     //highlight-start
     liveMode: "manual",
     onLiveEvent: (event) => {
@@ -157,7 +157,7 @@ export const PostEdit: React.FC = () => {
 
   //highlight-start
   const handleRefresh = () => {
-    queryResult?.refetch();
+    query?.refetch();
     setDeprecated(undefined);
   };
   //highlight-end
@@ -285,7 +285,7 @@ export const CustomSider: typeof Sider = ({ render }) => {
       return (
         <CanAccess
           key={route}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{ resource: item }}
         >
@@ -514,7 +514,7 @@ export const CustomSider: typeof Sider = ({ render }) => {
       return (
         <CanAccess
           key={key}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{ resource: item }}
         >

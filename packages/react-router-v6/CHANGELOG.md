@@ -1,5 +1,72 @@
 # @refinedev/react-router-v6
 
+## 4.6.0
+
+### Minor Changes
+
+- [#6159](https://github.com/refinedev/refine/pull/6159) [`ad401d52957bf831e47707e86cb1e2f8b8c20f4b`](https://github.com/refinedev/refine/commit/ad401d52957bf831e47707e86cb1e2f8b8c20f4b) Thanks [@alicanerdurmaz](https://github.com/alicanerdurmaz)! - feat: [`<DocumentTitleHandler/>`](https://refine.dev/docs/routing/integrations/react-router/#documenttitlehandler) should populated `resource.meta.label` field if it's not provided on the Refine's resource definition.
+  From now on, users be able to use the `resource.meta.label` field to customize document title more easily.
+
+  ```tsx
+  import {
+    BrowserRouter,
+    DocumentTitleHandler,
+  } from "@refinedev/react-router-v6";
+  import { Refine } from "@refinedev/core";
+
+  const App = () => {
+    return (
+      <BrowserRouter>
+        <Refine
+        /* ... */
+        >
+          {/* ... */}
+          <DocumentTitleHandler
+            handler={({ action, params, resource }) => {
+              const id = params?.id ?? "";
+
+              const actionPrefixMatcher = {
+                create: "Create new ",
+                clone: `#${id} Clone ${resource?.meta?.label}`,
+                edit: `#${id} Edit ${resource?.meta?.label}`,
+                show: `#${id} Show ${resource?.meta?.label}`,
+                list: `${resource?.meta?.label}`,
+              };
+
+              const suffix = " | <Company Name>";
+              const title = actionPrefixMatcher[action || "list"] + suffix;
+
+              return title;
+            }}
+          />
+        </Refine>
+      </BrowserRouter>
+    );
+  };
+  ```
+
+## 4.5.11
+
+### Patch Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+## 4.5.10
+
+### Patch Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d) Thanks [@aliemir](https://github.com/aliemir)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
 ## 4.5.9
 
 ### Patch Changes

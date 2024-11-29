@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
-  UpdatePasswordFormTypes,
-  UpdatePasswordPageProps,
+  type UpdatePasswordFormTypes,
+  type UpdatePasswordPageProps,
   useActiveAuthProvider,
 } from "@refinedev/core";
 
@@ -19,14 +19,14 @@ import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 
 import {
-  BaseRecord,
-  HttpError,
+  type BaseRecord,
+  type HttpError,
   useTranslate,
   useUpdatePassword,
 } from "@refinedev/core";
 
 import { layoutStyles, titleStyles } from "../styles";
-import { FormPropsType } from "../../index";
+import type { FormPropsType } from "../../index";
 import { ThemedTitleV2 } from "@components";
 
 type UpdatePasswordProps = UpdatePasswordPageProps<
@@ -45,6 +45,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
   renderContent,
   formProps,
   title = undefined,
+  mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
   const {
@@ -105,7 +106,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
               return onSubmit(data);
             }
 
-            return update(data);
+            return update({ ...mutationVariables, ...data });
           })}
         >
           <TextField

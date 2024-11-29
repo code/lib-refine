@@ -178,7 +178,9 @@ You can either use the `dataProviderName` prop in data hooks and data-related co
 
 ```tsx
 useTable({
-  dataProviderName: "example",
+  meta: {
+    dataProviderName: "example",
+  },
 });
 ```
 
@@ -241,6 +243,7 @@ The `getList` method is used to get a list of resources with sorting, filtering,
 Refine will consume this method using the [`useList`][use-list] or [`useInfiniteList`][use-infinite-list] data hook.
 
 #### Retrieving the Total Row Count
+
 - Different data providers have specific ways to determine the total row count, and these are just some examples:
   - **Simple REST Providers:** The `x-total-count` header is commonly used to get the row count.
   - **GraphQL Providers:** The total count is often sourced from specific data fields, like `response.data.pageInfo.total`.
@@ -266,6 +269,7 @@ getList: async ({ resource, pagination, sorters, filters, meta }) => {
     total,
   };
 };
+```
 
 :::tip
 
@@ -699,7 +703,7 @@ Refine will consume:
 
 ### How can I customize existing data providers?
 
-[Refer to the "Create Data Provider with Swizzle" section in the tutorial for more information →][swizzle-a-data-provider]
+[You can swizzle the data provider using the Refine CLI and customize it as needed.][swizzle-a-data-provider]
 
 ### How I can override a specific method of Data Providers?
 
@@ -728,9 +732,9 @@ const myDataProvider = {
 ```
 
 [basekey]: /docs/core/interface-references#basekey
-[create-a-data-provider]: /docs/data/data-provider
-[swizzle-a-data-provider]: /docs/packages/cli
-[data-provider-tutorial]: /docs/data/data-provider
+[create-a-data-provider]: https://refine.dev/tutorial/essentials/data-fetching/intro/#creating-a-data-provider
+[swizzle-a-data-provider]: /docs/packages/cli/#swizzle
+[data-provider-tutorial]: https://refine.dev/tutorial/essentials/data-fetching/intro/
 [use-api-url]: /docs/data/hooks/use-api-url
 [use-create]: /docs/data/hooks/use-create
 [use-create-many]: /docs/data/hooks/use-create

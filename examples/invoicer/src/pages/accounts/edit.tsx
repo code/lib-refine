@@ -1,4 +1,4 @@
-import { HttpError, useNavigation } from "@refinedev/core";
+import { type HttpError, useNavigation } from "@refinedev/core";
 import {
   DateField,
   DeleteButton,
@@ -25,12 +25,16 @@ import {
   FormItemEditableText,
   FormItemUploadLogo,
 } from "@/components/form";
-import { Account, AccountForm } from "@/types";
+import type { Account, AccountForm } from "@/types";
 
 export const AccountsPageEdit = () => {
   const { listUrl } = useNavigation();
 
-  const { formProps, queryResult } = useForm<Account, HttpError, AccountForm>({
+  const { formProps, query: queryResult } = useForm<
+    Account,
+    HttpError,
+    AccountForm
+  >({
     redirect: false,
     meta: {
       populate: ["logo", "clients", "invoices.client"],

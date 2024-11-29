@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  RegisterPageProps,
-  RegisterFormTypes,
+  type RegisterPageProps,
+  type RegisterFormTypes,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import {
@@ -21,8 +21,8 @@ import {
   Anchor,
   Button,
   Text,
-  BoxProps,
-  CardProps,
+  type BoxProps,
+  type CardProps,
   Group,
   Stack,
   Divider,
@@ -37,7 +37,7 @@ import {
   titleStyles,
   pageTitleStyles,
 } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 
 type RegisterProps = RegisterPageProps<BoxProps, CardProps, FormPropsType>;
 
@@ -54,6 +54,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   providers,
   title,
   hideForm,
+  mutationVariables,
 }) => {
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -110,6 +111,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                   leftIcon={provider.icon}
                   onClick={() =>
                     register({
+                      ...mutationVariables,
                       providerName: provider.name,
                     })
                   }
@@ -123,7 +125,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             <Divider
               my="md"
               labelPosition="center"
-              label={translate("pages.login.divider", "or")}
+              label={translate(
+                "pages.register.divider",
+                translate("pages.login.divider", "or"),
+              )}
             />
           )}
         </>
@@ -150,7 +155,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               if (onSubmitProp) {
                 return onSubmitProp(values);
               }
-              return register(values);
+              return register({ ...mutationVariables, ...values });
             })}
           >
             <TextInput

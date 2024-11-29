@@ -1,5 +1,61 @@
 # @refinedev/supabase
 
+## 5.9.4
+
+### Patch Changes
+
+- [#6240](https://github.com/refinedev/refine/pull/6240) [`697561ba04abfb570ae978066668583096ea24c0`](https://github.com/refinedev/refine/commit/697561ba04abfb570ae978066668583096ea24c0) Thanks [@pkarc](https://github.com/pkarc)! - fix(supabase): issue with parsed values when using conditional filters
+
+  Fixed conditional filter's parsed values while using `contains`, `containss`, `startswith` and `endswith`.
+
+  [Fixes #6239](https://github.com/refinedev/refine/issues/6239)
+
+## 5.9.3
+
+### Patch Changes
+
+- [#6206](https://github.com/refinedev/refine/pull/6206) [`399ff2f9b785a1eebf59235fe6a5663d8b943ad3`](https://github.com/refinedev/refine/commit/399ff2f9b785a1eebf59235fe6a5663d8b943ad3) Thanks [@Sergio16T](https://github.com/Sergio16T)! - feat: added support for between filter in supabase dataProvider. Maps values to gte & lte.
+
+  [Feat #6119](https://github.com/refinedev/refine/issues/6119)
+
+## 5.9.2
+
+### Patch Changes
+
+- [#6025](https://github.com/refinedev/refine/pull/6025) [`f4e61b0fae7e78d0c63c09453f4bd11b4c6f8b09`](https://github.com/refinedev/refine/commit/f4e61b0fae7e78d0c63c09453f4bd11b4c6f8b09) Thanks [@youssefsiam38](https://github.com/youssefsiam38)! - fix supabase sorting with nested embedded resources
+
+## 5.9.0
+
+### Minor Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - Added ina and nina CrudOperators. Added filtering by these operators to Supabase data provider
+  #5902
+
+### Patch Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+## 5.8.0
+
+### Minor Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`a39f1952554120893ea83db904037917fc293dc6`](https://github.com/refinedev/refine/commit/a39f1952554120893ea83db904037917fc293dc6) Thanks [@aliemir](https://github.com/aliemir)! - Added ina and nina CrudOperators. Added filtering by these operators to Supabase data provider
+  #5902
+
+### Patch Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d) Thanks [@aliemir](https://github.com/aliemir)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
 ## 5.7.10
 
 ### Patch Changes

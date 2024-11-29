@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  ITreeMenu,
+  type ITreeMenu,
   CanAccess,
   useIsExistAuthentication,
   useTranslate,
@@ -9,7 +9,7 @@ import {
   useWarnAboutChange,
 } from "@refinedev/core";
 import { Link } from "react-router-dom";
-import { Sider, ThemedTitleV2 } from "@refinedev/antd";
+import { type Sider, ThemedTitleV2 } from "@refinedev/antd";
 import { Layout as AntdLayout, Menu, Grid, theme, Button } from "antd";
 import {
   LogoutOutlined,
@@ -66,7 +66,7 @@ export const CustomSider: typeof Sider = ({ render }) => {
       return (
         <CanAccess
           key={route}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{ resource: item }}
         >

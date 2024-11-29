@@ -15,7 +15,7 @@ import {
 
 import { Table, Space, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { IPost } from "../../interfaces";
+import type { IPost } from "../../interfaces";
 
 export const PostList = () => {
   const { tableProps, filters, sorters } = useTable<IPost>({
@@ -44,7 +44,7 @@ export const PostList = () => {
     },
   });
 
-  const { selectProps: selectPropsCategory, queryResult: queryResultCategory } =
+  const { selectProps: selectPropsCategory, query: queryResultCategory } =
     useSelect({
       resource: "category",
       optionLabel: "title",

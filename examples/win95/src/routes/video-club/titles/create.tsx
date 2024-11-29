@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  HttpError,
+  type HttpError,
   useCreate,
   useCreateMany,
   useNavigation,
@@ -20,12 +20,12 @@ import { VideoClubLayoutSubPage } from "@/components/layout";
 import { MediaPlayerModal } from "@/components/media-player";
 import { ImagePixelated } from "@/components/image-pixelated";
 import {
-  TitleByTmdbIdResponse,
+  type TitleByTmdbIdResponse,
   getTitleByTmdbId,
 } from "@/utils/get-title-by-tmdb-id";
 import { parseTmdbIdFromUrl } from "@/utils/parse-tmdb-id-from-url";
 import { getImagesUrl } from "@/utils/get-cdn-url";
-import { Tape, VideoTitle } from "@/types";
+import type { Tape, VideoTitle } from "@/types";
 
 export const VideoClubPageCreateTitle = () => {
   const navigate = useNavigate();
@@ -37,12 +37,15 @@ export const VideoClubPageCreateTitle = () => {
     VideoTitle,
     HttpError,
     Omit<VideoTitle, "id" | "created_at">
-  >();
+  >({ resource: "titles", meta: { select: "*" }, successNotification: false });
   const { mutateAsync: createTapes } = useCreateMany<
     Tape,
     HttpError,
     Omit<Tape, "id" | "created_at">
-  >();
+  >({
+    resource: "tapes",
+    meta: { select: "*" },
+  });
 
   const [numberOfCopies, setNumberOfCopies] = React.useState<number>(1);
   const [titleQuery, setTitleQuery] = React.useState<{
@@ -100,10 +103,7 @@ export const VideoClubPageCreateTitle = () => {
     if (!titleQuery?.data) return;
 
     createTitle({
-      resource: "titles",
       values: titleQuery.data,
-      meta: { select: "*" },
-      successNotification: false,
     }).then((response) => {
       if (!response?.data) return;
 
@@ -115,9 +115,7 @@ export const VideoClubPageCreateTitle = () => {
       }));
 
       createTapes({
-        resource: "tapes",
         values: tapes,
-        meta: { select: "*" },
         successNotification: {
           message: "Title added successfully!",
           type: "success",
@@ -128,8 +126,6 @@ export const VideoClubPageCreateTitle = () => {
       });
     });
   };
-
-  console.log(titleQuery);
 
   return (
     <>

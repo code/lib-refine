@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 
 import {
   fireEvent,
@@ -8,7 +8,7 @@ import {
   TestWrapper,
   waitFor,
 } from "@test";
-import { LoginPageProps } from "@refinedev/core";
+import type { LoginPageProps } from "@refinedev/core";
 
 export const pageLoginTests = (
   LoginPage: FC<LoginPageProps<any, any, any>>,
@@ -402,6 +402,51 @@ export const pageLoginTests = (
           }),
         ).toHaveAttribute("href", "/forgot-password");
       }
+    });
+
+    it("should should accept 'mutationVariables'", async () => {
+      const loginMock = jest.fn().mockResolvedValue({ success: true });
+
+      const { getByRole, getByLabelText } = render(
+        <LoginPage
+          mutationVariables={{
+            foo: "bar",
+            xyz: "abc",
+          }}
+        />,
+        {
+          wrapper: TestWrapper({
+            authProvider: {
+              ...mockAuthProvider,
+              login: loginMock,
+            },
+          }),
+        },
+      );
+
+      fireEvent.change(getByLabelText(/email/i), {
+        target: { value: "demo@refine.dev" },
+      });
+
+      fireEvent.change(getByLabelText(/password/i), {
+        target: { value: "demo" },
+      });
+
+      fireEvent.click(
+        getByRole("button", {
+          name: /sign in/i,
+        }),
+      );
+
+      await waitFor(() => {
+        expect(loginMock).toHaveBeenCalledWith({
+          foo: "bar",
+          xyz: "abc",
+          email: "demo@refine.dev",
+          password: "demo",
+          remember: false,
+        });
+      });
     });
   });
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  ForgotPasswordPageProps,
-  ForgotPasswordFormTypes,
+  type ForgotPasswordPageProps,
+  type ForgotPasswordFormTypes,
   useRouterType,
   useLink,
 } from "@refinedev/core";
@@ -19,8 +19,8 @@ import {
   Anchor,
   Button,
   Text,
-  BoxProps,
-  CardProps,
+  type BoxProps,
+  type CardProps,
   Group,
   useMantineTheme,
 } from "@mantine/core";
@@ -33,7 +33,7 @@ import {
   titleStyles,
   pageTitleStyles,
 } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 
 type ResetPassworProps = ForgotPasswordPageProps<
   BoxProps,
@@ -52,6 +52,7 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -105,7 +106,7 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
             if (onSubmitProp) {
               return onSubmitProp(values);
             }
-            return forgotPassword(values);
+            return forgotPassword({ ...mutationVariables, ...values });
           })}
         >
           <TextInput
@@ -122,8 +123,11 @@ export const ForgotPasswordPage: React.FC<ResetPassworProps> = ({
             <Group mt="md" position={loginLink ? "left" : "right"}>
               <Text size="xs">
                 {translate(
-                  "pages.login.forgotPassword.haveAccount",
-                  "Have an account?",
+                  "pages.forgotPassword.buttons.haveAccount",
+                  translate(
+                    "pages.login.forgotPassword.haveAccount",
+                    "Have an account? ",
+                  ),
                 )}{" "}
                 <Anchor component={ActiveLink as any} to="/login" weight={700}>
                   {translate("pages.forgotPassword.signin", "Sign in")}

@@ -1,5 +1,13 @@
-import React from "react";
-import { Layout, Menu, Grid, Drawer, Button, theme } from "antd";
+import React, { useContext } from "react";
+import {
+  Layout,
+  Menu,
+  Grid,
+  Drawer,
+  Button,
+  theme,
+  ConfigProvider,
+} from "antd";
 import {
   DashboardOutlined,
   LogoutOutlined,
@@ -13,7 +21,7 @@ import {
   useLogout,
   useTitle,
   CanAccess,
-  ITreeMenu,
+  type ITreeMenu,
   useIsExistAuthentication,
   useRouterContext,
   useMenu,
@@ -26,7 +34,7 @@ import {
 } from "@refinedev/core";
 
 import { drawerButtonStyles } from "./styles";
-import { RefineThemedLayoutV2SiderProps } from "../types";
+import type { RefineThemedLayoutV2SiderProps } from "../types";
 import { ThemedTitleV2 } from "@components";
 import { useThemedLayoutContext } from "@hooks";
 
@@ -46,6 +54,7 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
   } = useThemedLayoutContext();
 
   const isExistAuthentication = useIsExistAuthentication();
+  const direction = useContext(ConfigProvider.ConfigContext)?.direction;
   const routerType = useRouterType();
   const NewLink = useLink();
   const { warnWhen, setWarnWhen } = useWarnAboutChange();
@@ -84,7 +93,7 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
         return (
           <CanAccess
             key={item.key}
-            resource={name.toLowerCase()}
+            resource={name}
             action="list"
             params={{
               resource: item,
@@ -112,7 +121,7 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
       return (
         <CanAccess
           key={item.key}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{
             resource: item,
@@ -219,7 +228,7 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
         <Drawer
           open={mobileSiderOpen}
           onClose={() => setMobileSiderOpen(false)}
-          placement="left"
+          placement={direction === "rtl" ? "right" : "left"}
           closable={false}
           width={200}
           bodyStyle={{
@@ -277,6 +286,14 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
     siderStyles.height = "100vh";
     siderStyles.zIndex = 999;
   }
+  const renderClosingIcons = () => {
+    const iconProps = { style: { color: token.colorPrimary } };
+    const OpenIcon = direction === "rtl" ? RightOutlined : LeftOutlined;
+    const CollapsedIcon = direction === "rtl" ? LeftOutlined : RightOutlined;
+    const IconComponent = siderCollapsed ? CollapsedIcon : OpenIcon;
+
+    return <IconComponent {...iconProps} />;
+  };
 
   return (
     <>
@@ -309,19 +326,7 @@ export const ThemedSiderV2: React.FC<RefineThemedLayoutV2SiderProps> = ({
               backgroundColor: token.colorBgElevated,
             }}
           >
-            {siderCollapsed ? (
-              <RightOutlined
-                style={{
-                  color: token.colorPrimary,
-                }}
-              />
-            ) : (
-              <LeftOutlined
-                style={{
-                  color: token.colorPrimary,
-                }}
-              />
-            )}
+            {renderClosingIcons()}
           </Button>
         }
       >

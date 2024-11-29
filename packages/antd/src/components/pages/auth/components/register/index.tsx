@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  RegisterPageProps,
-  RegisterFormTypes,
+  type RegisterPageProps,
+  type RegisterFormTypes,
   useRouterType,
   useLink,
   useActiveAuthProvider,
@@ -15,9 +15,9 @@ import {
   Form,
   Input,
   Button,
-  LayoutProps,
-  CardProps,
-  FormProps,
+  type LayoutProps,
+  type CardProps,
+  type FormProps,
   Divider,
   theme,
 } from "antd";
@@ -47,6 +47,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   formProps,
   title,
   hideForm,
+  mutationVariables,
 }) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm<RegisterFormTypes>();
@@ -108,6 +109,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 }}
                 onClick={() =>
                   register({
+                    ...mutationVariables,
                     providerName: provider.name,
                   })
                 }
@@ -123,7 +125,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                   color: token.colorTextLabel,
                 }}
               >
-                {translate("pages.login.divider", "or")}
+                {translate(
+                  "pages.register.divider",
+                  translate("pages.login.divider", "or"),
+                )}
               </Typography.Text>
             </Divider>
           )}
@@ -149,7 +154,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
         <Form<RegisterFormTypes>
           layout="vertical"
           form={form}
-          onFinish={(values) => register(values)}
+          onFinish={(values) => register({ ...mutationVariables, ...values })}
           requiredMark={false}
           {...formProps}
         >
@@ -208,8 +213,11 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 }}
               >
                 {translate(
-                  "pages.login.buttons.haveAccount",
-                  "Have an account?",
+                  "pages.register.buttons.haveAccount",
+                  translate(
+                    "pages.login.buttons.haveAccount",
+                    "Have an account?",
+                  ),
                 )}{" "}
                 <ActiveLink
                   style={{
@@ -218,7 +226,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                   }}
                   to="/login"
                 >
-                  {translate("pages.login.signin", "Sign in")}
+                  {translate(
+                    "pages.register.signin",
+                    translate("pages.login.signin", "Sign in"),
+                  )}
                 </ActiveLink>
               </Typography.Text>
             )}
@@ -251,7 +262,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               fontSize: 12,
             }}
           >
-            {translate("pages.login.buttons.haveAccount", "Have an account?")}{" "}
+            {translate(
+              "pages.register.buttons.haveAccount",
+              translate("pages.login.buttons.haveAccount", "Have an account?"),
+            )}{" "}
             <ActiveLink
               style={{
                 fontWeight: "bold",
@@ -259,7 +273,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               }}
               to="/login"
             >
-              {translate("pages.login.signin", "Sign in")}
+              {translate(
+                "pages.register.signin",
+                translate("pages.login.signin", "Sign in"),
+              )}
             </ActiveLink>
           </Typography.Text>
         </div>

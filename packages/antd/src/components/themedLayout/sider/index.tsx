@@ -13,7 +13,7 @@ import {
   useLogout,
   useTitle,
   CanAccess,
-  ITreeMenu,
+  type ITreeMenu,
   useIsExistAuthentication,
   useRouterContext,
   useMenu,
@@ -26,7 +26,7 @@ import {
 } from "@refinedev/core";
 
 import { drawerButtonStyles } from "./styles";
-import { RefineThemedLayoutSiderProps } from "../types";
+import type { RefineThemedLayoutSiderProps } from "../types";
 import { ThemedTitle } from "@components";
 
 /**
@@ -80,7 +80,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
         return (
           <CanAccess
             key={item.key}
-            resource={name.toLowerCase()}
+            resource={name}
             action="list"
             params={{
               resource: item,
@@ -105,7 +105,7 @@ export const ThemedSider: React.FC<RefineThemedLayoutSiderProps> = ({
       return (
         <CanAccess
           key={item.key}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{
             resource: item,

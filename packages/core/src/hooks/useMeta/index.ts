@@ -1,16 +1,19 @@
+import { useMetaContext } from "@contexts/metaContext";
 import { sanitizeResource } from "@definitions/helpers/sanitize-resource";
 import { useParsed } from "@hooks/router";
 
-import { MetaQuery } from "../../contexts/data/types";
-import { IResourceItem } from "../../contexts/resource/types";
+import type { MetaQuery } from "../../contexts/data/types";
+import type { IResourceItem } from "../../contexts/resource/types";
 
 /**
  * Hook that returns a function to get meta.
- * The meta is a combination of the resource meta, hook meta and query params.
+ * The meta is a combination of the resource meta, hook meta, query params and metaContext value.
  * @internal
  */
 export const useMeta = () => {
   const { params } = useParsed();
+
+  const metaContext = useMetaContext();
 
   const getMetaFn = ({
     resource,
@@ -30,7 +33,18 @@ export const useMeta = () => {
       ...additionalParams
     } = params ?? {};
 
-    return { ...meta, ...additionalParams, ...metaFromProp };
+    const result: Record<string, unknown> = {
+      ...meta,
+      ...additionalParams,
+      ...metaFromProp,
+    };
+
+    // when MultiTenancyProvider from "@refinedev-ee/multi-tenancy" is provided, we need to add tenantId to the meta
+    if (metaContext?.tenantId) {
+      result["tenantId"] = metaContext.tenantId;
+    }
+
+    return result;
   };
 
   return getMetaFn;

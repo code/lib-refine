@@ -1,7 +1,7 @@
 import * as React from "react";
 import {
-  RegisterFormTypes,
-  RegisterPageProps,
+  type RegisterFormTypes,
+  type RegisterPageProps,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
@@ -21,8 +21,8 @@ import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 
 import {
-  BaseRecord,
-  HttpError,
+  type BaseRecord,
+  type HttpError,
   useTranslate,
   useRouterContext,
   useRouterType,
@@ -31,7 +31,7 @@ import {
 } from "@refinedev/core";
 
 import { layoutStyles, titleStyles } from "../styles";
-import { FormPropsType } from "../../index";
+import type { FormPropsType } from "../../index";
 import { ThemedTitleV2 } from "@components";
 
 type RegisterProps = RegisterPageProps<
@@ -53,6 +53,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   formProps,
   title,
   hideForm,
+  mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
   const {
@@ -114,6 +115,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                   }}
                   onClick={() =>
                     registerMutate({
+                      ...mutationVariables,
                       providerName: provider.name,
                     })
                   }
@@ -131,7 +133,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 marginY: "16px",
               }}
             >
-              {translate("pages.login.divider", "or")}
+              {translate(
+                "pages.register.divider",
+                translate("pages.login.divider", "or"),
+              )}
             </Divider>
           )}
         </>
@@ -162,7 +167,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 return onSubmit(data);
               }
 
-              return registerMutate(data);
+              return registerMutate({ ...mutationVariables, ...data });
             })}
           >
             <TextField
@@ -238,7 +243,13 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             }}
           >
             <Typography variant="body2" component="span" fontSize="12px">
-              {translate("pages.login.buttons.haveAccount", "Have an account?")}
+              {translate(
+                "pages.register.buttons.haveAccount",
+                translate(
+                  "pages.login.buttons.haveAccount",
+                  "Have an account?",
+                ),
+              )}
             </Typography>
             <MuiLink
               ml="4px"
@@ -250,7 +261,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               fontSize="12px"
               fontWeight="bold"
             >
-              {translate("pages.login.signin", "Sign in")}
+              {translate(
+                "pages.register.signin",
+                translate("pages.login.signin", "Sign in"),
+              )}
             </MuiLink>
           </Box>
         )}

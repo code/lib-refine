@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { useNavigation, useOne, useUpdateMany } from "@refinedev/core";
+import {
+  useNavigation,
+  useOne,
+  useSubscription,
+  useUpdateMany,
+} from "@refinedev/core";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -25,7 +30,7 @@ import { IconChevronLeft, ArrowGreenPixelatedIcon } from "@/components/icons";
 import { ImagePixelated } from "@/components/image-pixelated";
 import { NIGHTLY_RENTAL_FEE } from "@/utils/app-settings";
 import { convertToUSD } from "@/utils/convert-to-usd";
-import { ExtendedMember, ExtendedRental } from "@/types";
+import type { ExtendedMember, ExtendedRental } from "@/types";
 
 export const VideoClubPageTapeReturn = () => {
   const [selectedRentals, setSelectedRentals] = useState<ExtendedRental[]>([]);
@@ -34,7 +39,11 @@ export const VideoClubPageTapeReturn = () => {
   const navigate = useNavigate();
   const { memberId } = useParams();
 
-  const { data: dataMember, isLoading } = useOne<ExtendedMember>({
+  const {
+    data: dataMember,
+    isLoading,
+    refetch,
+  } = useOne<ExtendedMember>({
     resource: "members",
     id: memberId,
     queryOptions: {
@@ -44,8 +53,32 @@ export const VideoClubPageTapeReturn = () => {
       select: "*, rentals(*, titles(*))",
     },
   });
+  const member = dataMember?.data || null;
+  const notReturnedRentals =
+    member?.rentals.filter((rental) => !rental.returned_at) || [];
 
-  const { mutate: checkout } = useUpdateMany<ExtendedRental>();
+  useSubscription({
+    channel: "rentals",
+    onLiveEvent: () => {
+      refetch();
+    },
+  });
+
+  useSubscription({
+    channel: "titles",
+    onLiveEvent: () => {
+      refetch();
+    },
+  });
+
+  const { mutate: checkout } = useUpdateMany<ExtendedRental>({
+    resource: "rentals",
+    mutationOptions: {
+      onSuccess: () => {
+        navigate("/video-club");
+      },
+    },
+  });
 
   const handleOnRentalSelect = (rental: ExtendedRental) => {
     if (selectedRentals.includes(rental)) {
@@ -55,26 +88,22 @@ export const VideoClubPageTapeReturn = () => {
     }
   };
 
-  const handleCheckOut = () => {
-    checkout(
-      {
-        resource: "rentals",
-        ids: selectedRentals.map((r) => r.id),
-        values: selectedRentals.map((r) => ({
-          returned_at: new Date(),
-        })),
-      },
-      {
-        onSuccess: () => {
-          navigate("/video-club");
-        },
-      },
-    );
+  const selectAllRentals = () => {
+    setSelectedRentals(notReturnedRentals);
   };
 
-  const member = dataMember?.data || null;
-  const notReturnedRentals =
-    member?.rentals.filter((rental) => !rental.returned_at) || [];
+  const unselectAllRentals = () => {
+    setSelectedRentals([]);
+  };
+
+  const handleCheckOut = () => {
+    checkout({
+      ids: selectedRentals.map((r) => r.id),
+      values: selectedRentals.map((r) => ({
+        returned_at: new Date(),
+      })),
+    });
+  };
 
   return (
     <VideoClubLayoutSubPage
@@ -95,6 +124,8 @@ export const VideoClubPageTapeReturn = () => {
               onRentalSelect={(rental) => {
                 handleOnRentalSelect(rental);
               }}
+              onSelectAll={selectAllRentals}
+              onUnSelectAll={unselectAllRentals}
             />
           </MemberDetailsContainer>
         </ContainerMember>
@@ -172,6 +203,8 @@ const RentalsTable = (props: {
   rentals: ExtendedRental[];
   selectedRentals?: ExtendedRental[];
   onRentalSelect: (rental: ExtendedRental) => void;
+  onSelectAll?: () => void;
+  onUnSelectAll?: () => void;
 }) => {
   return (
     <TableContainer>
@@ -179,7 +212,16 @@ const RentalsTable = (props: {
         <TableHead>
           <TableRow>
             <TableHeadCell $width={24}>
-              <StyledCheckbox />
+              <StyledCheckbox
+                onClick={(e) => {
+                  const isChecked = e.currentTarget.checked;
+                  if (isChecked) {
+                    props.onSelectAll?.();
+                  } else {
+                    props.onUnSelectAll?.();
+                  }
+                }}
+              />
             </TableHeadCell>
             <TableHeadCell $width={64}>ID</TableHeadCell>
             <TableHeadCell $width={90}>Tape ID</TableHeadCell>

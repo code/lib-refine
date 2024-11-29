@@ -1,4 +1,4 @@
-import { NavMenu } from "../types/nav-menu";
+import type { NavMenu } from "../types/nav-menu";
 import {
   DocumentsIcon,
   IntegrationsIcon,
@@ -109,7 +109,7 @@ export const POPOVERMENUS: NavMenu[] = [
       {
         label: "Meet Refine",
         description: "Call us for any questions",
-        link: "https://refinedev.typeform.com/to/Z9wS06kE",
+        link: "https://form.typeform.com/to/Z9wS06kE",
         icon: RefineIcon,
       },
     ],

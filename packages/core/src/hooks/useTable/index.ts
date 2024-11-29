@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-import { QueryObserverResult, UseQueryOptions } from "@tanstack/react-query";
+import type {
+  QueryObserverResult,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import differenceWith from "lodash/differenceWith";
 import isEqual from "lodash/isEqual";
 import qs from "qs";
@@ -28,7 +31,7 @@ import {
   useSyncWithLocation,
 } from "@hooks";
 
-import {
+import type {
   BaseRecord,
   CrudFilter,
   CrudSort,
@@ -38,12 +41,12 @@ import {
   Pagination,
   Prettify,
 } from "../../contexts/data/types";
-import { LiveModeProps } from "../../contexts/live/types";
-import { SuccessErrorNotification } from "../../contexts/notification/types";
-import { BaseListProps } from "../data/useList";
+import type { LiveModeProps } from "../../contexts/live/types";
+import type { SuccessErrorNotification } from "../../contexts/notification/types";
+import type { BaseListProps } from "../data/useList";
 import {
-  UseLoadingOvertimeOptionsProps,
-  UseLoadingOvertimeReturnType,
+  type UseLoadingOvertimeOptionsProps,
+  type UseLoadingOvertimeReturnType,
   useLoadingOvertime,
 } from "../useLoadingOvertime";
 
@@ -198,6 +201,10 @@ export type useTableReturnType<
   TData extends BaseRecord = BaseRecord,
   TError extends HttpError = HttpError,
 > = {
+  tableQuery: QueryObserverResult<GetListResponse<TData>, TError>;
+  /**
+   * @deprecated `tableQueryResult` is deprecated. Use `tableQuery` instead.
+   */
   tableQueryResult: QueryObserverResult<GetListResponse<TData>, TError>;
   /**
    * @deprecated `sorter` is deprecated. Use `sorters` instead.
@@ -513,40 +520,56 @@ export function useTable<
     dataProviderName,
   });
 
-  const setFiltersAsMerge = (newFilters: CrudFilter[]) => {
-    setFilters((prevFilters) =>
-      unionFilters(preferredPermanentFilters, newFilters, prevFilters),
+  const setFiltersAsMerge = useCallback(
+    (newFilters: CrudFilter[]) => {
+      setFilters((prevFilters) =>
+        unionFilters(preferredPermanentFilters, newFilters, prevFilters),
+      );
+    },
+    [preferredPermanentFilters],
+  );
+
+  const setFiltersAsReplace = useCallback(
+    (newFilters: CrudFilter[]) => {
+      setFilters(unionFilters(preferredPermanentFilters, newFilters));
+    },
+    [preferredPermanentFilters],
+  );
+
+  const setFiltersWithSetter = useCallback(
+    (setter: (prevFilters: CrudFilter[]) => CrudFilter[]) => {
+      setFilters((prev) =>
+        unionFilters(preferredPermanentFilters, setter(prev)),
+      );
+    },
+    [preferredPermanentFilters],
+  );
+
+  const setFiltersFn: useTableReturnType<TQueryFnData>["setFilters"] =
+    useCallback(
+      (
+        setterOrFilters,
+        behavior: SetFilterBehavior = prefferedFilterBehavior,
+      ) => {
+        if (typeof setterOrFilters === "function") {
+          setFiltersWithSetter(setterOrFilters);
+        } else {
+          if (behavior === "replace") {
+            setFiltersAsReplace(setterOrFilters);
+          } else {
+            setFiltersAsMerge(setterOrFilters);
+          }
+        }
+      },
+      [setFiltersWithSetter, setFiltersAsReplace, setFiltersAsMerge],
     );
-  };
 
-  const setFiltersAsReplace = (newFilters: CrudFilter[]) => {
-    setFilters(unionFilters(preferredPermanentFilters, newFilters));
-  };
-
-  const setFiltersWithSetter = (
-    setter: (prevFilters: CrudFilter[]) => CrudFilter[],
-  ) => {
-    setFilters((prev) => unionFilters(preferredPermanentFilters, setter(prev)));
-  };
-
-  const setFiltersFn: useTableReturnType<TQueryFnData>["setFilters"] = (
-    setterOrFilters,
-    behavior: SetFilterBehavior = prefferedFilterBehavior,
-  ) => {
-    if (typeof setterOrFilters === "function") {
-      setFiltersWithSetter(setterOrFilters);
-    } else {
-      if (behavior === "replace") {
-        setFiltersAsReplace(setterOrFilters);
-      } else {
-        setFiltersAsMerge(setterOrFilters);
-      }
-    }
-  };
-
-  const setSortWithUnion = (newSorter: CrudSort[]) => {
-    setSorters(() => unionSorters(preferredPermanentSorters, newSorter));
-  };
+  const setSortWithUnion = useCallback(
+    (newSorter: CrudSort[]) => {
+      setSorters(() => unionSorters(preferredPermanentSorters, newSorter));
+    },
+    [preferredPermanentSorters],
+  );
 
   const { elapsedTime } = useLoadingOvertime({
     isLoading: queryResult.isFetching,
@@ -556,6 +579,7 @@ export function useTable<
 
   return {
     tableQueryResult: queryResult,
+    tableQuery: queryResult,
     sorters,
     setSorters: setSortWithUnion,
     sorter: sorters,

@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  UpdatePasswordPageProps,
-  UpdatePasswordFormTypes,
+  type UpdatePasswordPageProps,
+  type UpdatePasswordFormTypes,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import { useUpdatePassword, useTranslate } from "@refinedev/core";
@@ -12,8 +12,8 @@ import {
   TextInput,
   Title,
   Button,
-  BoxProps,
-  CardProps,
+  type BoxProps,
+  type CardProps,
   useMantineTheme,
 } from "@mantine/core";
 
@@ -24,7 +24,7 @@ import {
   titleStyles,
   pageTitleStyles,
 } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 import { ThemedTitleV2 } from "@components";
 
 type UpdatePassworProps = UpdatePasswordPageProps<
@@ -43,6 +43,7 @@ export const UpdatePasswordPage: React.FC<UpdatePassworProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -96,7 +97,7 @@ export const UpdatePasswordPage: React.FC<UpdatePassworProps> = ({
             if (onSubmitProp) {
               return onSubmitProp(values);
             }
-            return updatePassword(values);
+            return updatePassword({ ...mutationVariables, ...values });
           })}
         >
           <TextInput

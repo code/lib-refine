@@ -1,5 +1,61 @@
 # @refinedev/hasura
 
+## 6.6.8
+
+### Patch Changes
+
+- [#6379](https://github.com/refinedev/refine/pull/6379) [`a3fca84847b523d6ac8e7b30bebdb77010e8f7e5`](https://github.com/refinedev/refine/commit/a3fca84847b523d6ac8e7b30bebdb77010e8f7e5) Thanks [@BatuhanW](https://github.com/BatuhanW)! - fix(hasura): pass meta.gqlVariables to getOne gql request.
+
+  [Fixes #6374](https://github.com/refinedev/refine/issues/6374)
+
+## 6.6.7
+
+### Patch Changes
+
+- [#6222](https://github.com/refinedev/refine/pull/6222) [`ec24fe0f37aa9b92991bf105719f6f42bb68d63c`](https://github.com/refinedev/refine/commit/ec24fe0f37aa9b92991bf105719f6f42bb68d63c) Thanks [@Sergio16T](https://github.com/Sergio16T)! - feat: added support for meta.gqlVariables to hasura dataProvider. Updated GraphQLQueryOptions to include optional field gqlVariables
+
+  [Feat #5864](https://github.com/refinedev/refine/issues/5864)
+
+## 6.6.6
+
+### Patch Changes
+
+- [#6052](https://github.com/refinedev/refine/pull/6052) [`50d21076928ca738ec54cc5bcd17fad2683653dd`](https://github.com/refinedev/refine/commit/50d21076928ca738ec54cc5bcd17fad2683653dd) Thanks [@aliemir](https://github.com/aliemir)! - fix(hasura): broken lodash import in bundle
+
+  ESM bundle of `@refinedev/hasura` was broken due to incorrect lodash import. Import has been replaced with subdirectory import to get handled properly in the bundling process.
+
+  Fixes [#6044](https://github.com/refinedev/refine/issues/6044)
+
+## 6.6.4
+
+### Patch Changes
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - fix: [`hasuraFilters`](https://github.com/refinedev/refine/blob/master/packages/hasura/src/utils/generateFilters.ts) object type.
+
+  All fields in the [`CrudOperators`](https://github.com/refinedev/refine/blob/master/packages/core/src/contexts/data/types.ts#L218) interface must be used in the [`hasuraFilters`](https://github.com/refinedev/refine/blob/master/packages/hasura/src/utils/generateFilters.ts) object type, but some fields may not be supported by Hasura. To resolve this, the object type has been changed to partial.
+
+- [`6bd14228760d3e1e205ea9248e427f9afa2ec046`](https://github.com/refinedev/refine/commit/6bd14228760d3e1e205ea9248e427f9afa2ec046) Thanks [@BatuhanW](https://github.com/BatuhanW)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
+## 6.6.3
+
+### Patch Changes
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`c6f04637a890fced05adae0a2533bb554c1de428`](https://github.com/refinedev/refine/commit/c6f04637a890fced05adae0a2533bb554c1de428) Thanks [@aliemir](https://github.com/aliemir)! - fix: [`hasuraFilters`](https://github.com/refinedev/refine/blob/master/packages/hasura/src/utils/generateFilters.ts) object type.
+
+  All fields in the [`CrudOperators`](https://github.com/refinedev/refine/blob/master/packages/core/src/contexts/data/types.ts#L218) interface must be used in the [`hasuraFilters`](https://github.com/refinedev/refine/blob/master/packages/hasura/src/utils/generateFilters.ts) object type, but some fields may not be supported by Hasura. To resolve this, the object type has been changed to partial.
+
+- [#5945](https://github.com/refinedev/refine/pull/5945) [`90930b381d8d369c63bc59beedf69c391875166d`](https://github.com/refinedev/refine/commit/90930b381d8d369c63bc59beedf69c391875166d) Thanks [@aliemir](https://github.com/aliemir)! - chore: added `type` qualifier to imports used as type only.
+
+  ```diff
+  - import { A } from "./example.ts";
+  + import type { A } from "./example.ts";
+  ```
+
 ## 6.6.2
 
 ### Patch Changes

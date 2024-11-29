@@ -25,7 +25,7 @@ import {
 import type { UpdateParams } from "../data/useUpdate";
 import type { UseCreateParams } from "../data/useCreate";
 import type { UseFormProps, UseFormReturnType } from "./types";
-import {
+import type {
   BaseKey,
   BaseRecord,
   CreateResponse,
@@ -322,7 +322,9 @@ export const useForm = <
     onFinishAutoSave,
     formLoading,
     mutationResult,
+    mutation: mutationResult,
     queryResult,
+    query: queryResult,
     autoSaveProps,
     id,
     setId,

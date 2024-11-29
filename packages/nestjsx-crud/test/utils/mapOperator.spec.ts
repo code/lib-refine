@@ -1,10 +1,10 @@
-import { ComparisonOperator, CondOperator } from "@nestjsx/crud-request";
-import { CrudOperators } from "@refinedev/core";
+import { type ComparisonOperator, CondOperator } from "@nestjsx/crud-request";
+import type { CrudOperators } from "@refinedev/core";
 import { mapOperator } from "../../src/utils";
 
 describe("mapOperator", () => {
   it("should map CrudOperators to ComparisonOperator", () => {
-    const operators: Record<CrudOperators, ComparisonOperator> = {
+    const operators: Partial<Record<CrudOperators, ComparisonOperator>> = {
       and: "$and",
       or: "$or",
       ne: CondOperator.NOT_EQUALS,
@@ -24,7 +24,7 @@ describe("mapOperator", () => {
       startswiths: CondOperator.STARTS,
       endswith: CondOperator.ENDS_LOW,
       endswiths: CondOperator.ENDS,
-      between: CondOperator.EQUALS,
+      between: CondOperator.BETWEEN,
       eq: CondOperator.EQUALS,
       nbetween: CondOperator.EQUALS,
       nendswith: CondOperator.EQUALS,

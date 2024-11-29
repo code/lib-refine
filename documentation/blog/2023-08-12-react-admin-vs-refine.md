@@ -59,7 +59,7 @@ The seed round, supported by investors such as Senovo, 500 Emerging Europe, Palm
 
 In 2023, Refine also backed by YCombinator, solidifying its position as a promising venture.
 
-With over 30K monthly active developers using it and an impressive 25K+ GitHub stars earned in just a year and a half, Refine has gained significant popularity within the developer community.
+With over 32K+ monthly active developers using it and an impressive 27K+ GitHub stars earned in just a year and a half, Refine has gained significant popularity within the developer community.
 
 According to [OSS Insight data](https://ossinsight.io/collections/react-framework/), since the beginning of 2023, it has consistently ranked in the top three of trending React frameworks and web frameworks.
 
@@ -187,10 +187,9 @@ These small features lead to a huge difference in the development experience, yo
 
 **Examples**
 
-Check out the following examples of multitenant apps built with Refine:
+Check out the following example of multitenant app built with Refine:
 
-- [Multitenancy with Refine + Appwrite](/docs/guides-concepts/multi-tenancy/#appwrite)
-- [Multitenancy with Refine + Strapi](/docs/guides-concepts/multi-tenancy/#strapi)
+- [Multitenancy with Refine + Strapi](/docs/guides-concepts/multitenancy)
 
 ## Differences in supported UI frameworks between Refine and react-admin,
 
@@ -248,7 +247,7 @@ While both react-admin and Refine offer access control features, Refine takes it
 
 6. **Multitenancy Support:**
 
-Refine provides built-in support for [multitenancy](/docs/guides-concepts/multi-tenancy/#strapi), allowing developers to create applications that serve multiple tenants with separate data and settings.
+Refine provides built-in support for [multitenancy](/docs/guides-concepts/multitenancy), allowing developers to create applications that serve multiple tenants with separate data and settings.
 
 Refer to [this](#multitenancy) section for details.
 
@@ -407,7 +406,7 @@ When it comes to documentation, Refine has more useful resources.
 ## Community Engagement
 
  <div className="centered-image">
-   <img style={{alignSelf:"center"}}  src="https://refine.ams3.cdn.digitaloceanspaces.com/blog/2023-08-12-react-admin-vs-refine/star2.png"  alt="react-admin-vs-refine" />
+   <img style={{alignSelf:"center"}}  src="https://refine.ams3.cdn.digitaloceanspaces.com/blog/2023-08-12-react-admin-vs-refine/star-history-2.png"  alt="react-admin-vs-refine" />
 </div>
 
 <br/>
@@ -458,7 +457,7 @@ To sum it up:
 
 - Refine is not only an open-core solution but also a performance-driven framework with it's architecture.
 - Its headless nature keeps your project well within the realm of vanilla React, making integration seamless.This architecture ensures that your project remains firmly rooted in vanilla React, simplifying integration.
-- One of the most importatnt aspect is that Refine empowers you with free enterprise-level features, similar to those found in react-admin's enterprise package, without any additional financial commitment.
+- One of the most important aspect is that Refine empowers you with free enterprise-level features, similar to those found in react-admin's enterprise package, without any additional financial commitment.
 
 From our point of view, this combination of capabilities, coupled with its user-friendly nature and and remarkably small bundle size positions Refine as an perfect choice for web developers.
 
@@ -791,7 +790,7 @@ This structure will let you show errors in the form fields with out of the box i
 
 React-admin also provides a similar feature but it does not have the i18n support out of the box.
 
-Check out the [Server Side Validation](https://refine.dev/docs/advanced-tutorials/forms/server-side-form-validation/) documentation for more information about Refine's server side validation features.
+Check out the [Server Side Validation](https://refine.dev/docs/guides-concepts/forms/#server-side-validation-) documentation for more information about Refine's server side validation features.
 
 ### Auto Save
 

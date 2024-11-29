@@ -2,15 +2,15 @@ import React from "react";
 import {
   useTranslate,
   useUpdatePassword,
-  UpdatePasswordFormTypes,
-  UpdatePasswordPageProps,
-  BaseRecord,
-  HttpError,
+  type UpdatePasswordFormTypes,
+  type UpdatePasswordPageProps,
+  type BaseRecord,
+  type HttpError,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import {
   Box,
-  BoxProps,
+  type BoxProps,
   Button,
   FormControl,
   FormErrorMessage,
@@ -22,7 +22,7 @@ import {
 import { useForm } from "@refinedev/react-hook-form";
 
 import { layoutProps, cardProps } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 import { ThemedTitleV2 } from "@components";
 
 type UpdatePasswordProps = UpdatePasswordPageProps<
@@ -37,6 +37,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
   const translate = useTranslate();
@@ -92,7 +93,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
             return onSubmit(data);
           }
 
-          return mutate(data);
+          return mutate({ ...mutationVariables, ...data });
         })}
       >
         <FormControl mb="3" isInvalid={!!errors?.password}>

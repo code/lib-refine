@@ -1,6 +1,6 @@
 {
   "name": "@refinedev/react-hook-form",
-  "version": "4.8.18",
+  "version": "4.9.1",
   "private": false,
   "description": "refine offers a React Hook Form adapter that allows you to use the React Hook Form library with refine.",
   "repository": {
@@ -34,7 +34,7 @@
     "attw": "attw --pack .",
     "build": "tsup && node ../shared/generate-declarations.js",
     "dev": "tsup --watch",
-    "prepare": "pnpm -w build --scope @refinedev/react-hook-form",
+    "prepare": "pnpm build",
     "publint": "publint --strict=true --level=suggestion",
     "test": "jest --passWithNoTests --runInBand",
     "types": "node ../shared/generate-declarations.js"
@@ -42,11 +42,11 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
-    "react-hook-form": "^7.30.0"
+    "react-hook-form": "^7.43.5"
   },
   "devDependencies": {
     "@esbuild-plugins/node-resolve": "^0.1.4",
-    "@refinedev/core": "^4.49.2",
+    "@refinedev/core": "^4.56.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^14.1.1",
@@ -68,7 +68,7 @@
     "@types/react-dom": "^17.0.0 || ^18.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "react-hook-form": "^7.30.0"
+    "react-hook-form": "^7.43.5"
   },
   "engines": {
     "node": ">=10"

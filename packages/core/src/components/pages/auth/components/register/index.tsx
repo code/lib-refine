@@ -10,8 +10,8 @@ import {
 
 import { useActiveAuthProvider } from "@definitions/helpers";
 
-import { DivPropsType, FormPropsType } from "../..";
-import { RegisterPageProps } from "../../types";
+import type { DivPropsType, FormPropsType } from "../..";
+import type { RegisterPageProps } from "../../types";
 
 type RegisterProps = RegisterPageProps<
   DivPropsType,
@@ -28,6 +28,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   formProps,
   title = undefined,
   hideForm,
+  mutationVariables,
 }) => {
   const routerType = useRouterType();
   const Link = useLink();
@@ -64,6 +65,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           <button
             onClick={() =>
               register({
+                ...mutationVariables,
                 providerName: provider.name,
               })
             }
@@ -93,7 +95,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              register({ email, password });
+              register({ ...mutationVariables, email, password });
             }}
             {...formProps}
           >

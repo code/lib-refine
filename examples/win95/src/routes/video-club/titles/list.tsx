@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { getDefaultFilter, useTable } from "@refinedev/core";
+import {
+  getDefaultFilter,
+  useSubscription,
+  useTable,
+  Link,
+} from "@refinedev/core";
 import {
   Hourglass,
   Select,
@@ -12,18 +17,17 @@ import {
   TextInput,
 } from "react95";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { VideoClubLayoutSubPage } from "@/components/layout";
 import { Pagination } from "@/components/pagination";
 import { DangerIcon } from "@/components/icons";
 import { OPTIONS_YEAR } from "@/utils/options-year";
-import { ExtendedVideoTitle } from "@/types";
+import type { ExtendedVideoTitle } from "@/types";
 
 export const VideoClubPageBrowseTitles = () => {
   const navigate = useNavigate();
 
   const {
-    tableQueryResult: titlesQueryResult,
+    tableQuery: titlesQueryResult,
     pageCount,
     current,
     setCurrent,
@@ -35,10 +39,23 @@ export const VideoClubPageBrowseTitles = () => {
       select: "*, tapes(*), rentals(*)",
     },
   });
-
   const titles = titlesQueryResult?.data?.data || [];
   const titlesIsLoading = titlesQueryResult?.isLoading || false;
   const isLoading = titlesIsLoading;
+
+  useSubscription({
+    channel: "tapes",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
+    },
+  });
+
+  useSubscription({
+    channel: "rentals",
+    onLiveEvent: () => {
+      titlesQueryResult.refetch();
+    },
+  });
 
   return (
     <VideoClubLayoutSubPage
@@ -85,7 +102,7 @@ export const VideoClubPageBrowseTitles = () => {
           <FilterInputContainer>
             <FilterInputLabel>Category:</FilterInputLabel>
             <FilterInputText
-              defaultValue={getDefaultFilter("genres", filters, "contains")}
+              defaultValue={getDefaultFilter("genres", filters, "ina")}
               onChange={(e) => {
                 const value = e.target?.value?.trim();
                 setCurrent(1);
@@ -93,7 +110,7 @@ export const VideoClubPageBrowseTitles = () => {
                   {
                     field: "genres",
                     value: value.split(",").map((v) => v.trim()),
-                    operator: "contains",
+                    operator: "ina",
                   },
                 ]);
               }}
@@ -158,7 +175,17 @@ export const VideoClubPageBrowseTitles = () => {
                       {title.rentals.length}
                     </TableDataCell>
                     <TableDataCell $width={48} style={{ textAlign: "right" }}>
-                      <Link to={`/video-club/titles/${title.id}`}>View</Link>
+                      <Link
+                        go={{
+                          to: {
+                            resource: "titles",
+                            action: "show",
+                            id: title.id,
+                          },
+                        }}
+                      >
+                        View
+                      </Link>
                     </TableDataCell>
                   </TableRow>
                 );

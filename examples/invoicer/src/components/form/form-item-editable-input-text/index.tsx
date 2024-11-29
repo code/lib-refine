@@ -1,9 +1,9 @@
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import {
   Button,
   Flex,
   Form,
-  FormItemProps,
+  type FormItemProps,
   Input,
   Skeleton,
   Typography,

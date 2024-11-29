@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ITreeMenu, CanAccess, useMenu } from "@refinedev/core";
+import { type ITreeMenu, CanAccess, useMenu } from "@refinedev/core";
 
 import {
   UnorderedListOutlined,
@@ -48,7 +48,7 @@ export const FixedSider: React.FC = () => {
       return (
         <CanAccess
           key={route}
-          resource={name.toLowerCase()}
+          resource={name}
           action="list"
           params={{ resource: item }}
         >
@@ -122,7 +122,6 @@ export const FixedSider: React.FC = () => {
       >
         <ThemedTitle collapsed={collapsed} />
       </div>
-
       <Menu
         style={{
           marginTop: "8px",

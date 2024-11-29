@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  LoginPageProps,
-  LoginFormTypes,
+  type LoginPageProps,
+  type LoginFormTypes,
   useRouterType,
   useLink,
   useActiveAuthProvider,
@@ -20,8 +20,8 @@ import {
   Text,
   Divider,
   Stack,
-  BoxProps,
-  CardProps,
+  type BoxProps,
+  type CardProps,
   useMantineTheme,
 } from "@mantine/core";
 
@@ -33,7 +33,7 @@ import {
   titleStyles,
   pageTitleStyles,
 } from "../styles";
-import { FormPropsType } from "../..";
+import type { FormPropsType } from "../..";
 
 type LoginProps = LoginPageProps<BoxProps, CardProps, FormPropsType>;
 
@@ -52,6 +52,7 @@ export const LoginPage: React.FC<LoginProps> = ({
   formProps,
   title,
   hideForm,
+  mutationVariables,
 }) => {
   const theme = useMantineTheme();
   const { useForm, FormProvider } = FormContext;
@@ -106,6 +107,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                   leftIcon={provider.icon}
                   onClick={() =>
                     login({
+                      ...mutationVariables,
                       providerName: provider.name,
                     })
                   }
@@ -146,7 +148,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               if (onSubmitProp) {
                 return onSubmitProp(values);
               }
-              return login(values);
+              return login({ ...mutationVariables, ...values });
             })}
           >
             <TextInput

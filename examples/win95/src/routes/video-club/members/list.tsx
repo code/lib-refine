@@ -1,5 +1,10 @@
-import { getDefaultFilter, useTable } from "@refinedev/core";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  getDefaultFilter,
+  useSubscription,
+  useTable,
+  Link,
+} from "@refinedev/core";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "react95";
 import {
@@ -18,14 +23,14 @@ import {
 import { Pagination } from "@/components/pagination";
 import { DangerIcon } from "@/components/icons";
 import { VideoClubLayoutSubPage } from "@/components/layout";
-import { ExtendedMember } from "@/types";
+import type { ExtendedMember } from "@/types";
 import { hasActiveRental } from "@/utils/has-active-rental";
 
 export const VideoClubMemberPageList = () => {
   const navigate = useNavigate();
 
   const {
-    tableQueryResult: membersQueryResult,
+    tableQuery: membersQueryResult,
     pageCount,
     current,
     setCurrent,
@@ -35,6 +40,13 @@ export const VideoClubMemberPageList = () => {
     resource: "members",
     meta: {
       select: "*, rentals(*)",
+    },
+  });
+
+  useSubscription({
+    channel: "rentals",
+    onLiveEvent: () => {
+      membersQueryResult?.refetch();
     },
   });
 
@@ -161,7 +173,17 @@ export const VideoClubMemberPageList = () => {
                       $385,00
                     </TableDataCell>
                     <TableDataCell $width={64} style={{ textAlign: "right" }}>
-                      <Link to={`/video-club/members/${member.id}`}>View</Link>
+                      <Link
+                        go={{
+                          to: {
+                            resource: "members",
+                            action: "show",
+                            id: member.id,
+                          },
+                        }}
+                      >
+                        View
+                      </Link>
                     </TableDataCell>
                   </TableRow>
                 );

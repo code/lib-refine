@@ -27,7 +27,6 @@ export const DevtoolsSelector = ({
 
   return (
     <div style={style}>
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
       <div
         role="button"
         title="Element Selector"
@@ -54,6 +53,7 @@ export const DevtoolsSelector = ({
           width: 100%;
           transform: rotate(0deg);
           transition: transform 0.2s ease-in-out;
+          line-height: 1;
         }
 
         .refine-devtools-selector-button:hover {

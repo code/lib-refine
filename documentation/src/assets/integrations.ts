@@ -1,4 +1,4 @@
-import { IntegrationsType } from "../types/integrations";
+import type { IntegrationsType } from "../types/integrations";
 import {
   Ably,
   Airtable,
@@ -33,6 +33,8 @@ import {
   UseGenerated,
   Kinde,
   PocketBase,
+  ShadCnUI,
+  PostgREST,
 } from "./integration-icons";
 
 export const integrations: IntegrationsType = {
@@ -302,6 +304,20 @@ export const integrations: IntegrationsType = {
         },
       ],
     },
+    {
+      name: "PostgREST Data Provider",
+      icon: PostgREST,
+      description:
+        "Connector for backends created with <strong>PostgREST</strong>",
+      url: "https://github.com/ffimnsr/refine-postgrest-ts",
+      status: "stable",
+      contributors: [
+        {
+          name: "ffimnsr",
+          url: "https://github.com/ffimnsr",
+        },
+      ],
+    },
   ],
   frameworks: [
     {
@@ -379,6 +395,20 @@ export const integrations: IntegrationsType = {
         {
           name: "hirenf14",
           url: "https://github.com/hirenf14/refine-auth-kinde-react",
+        },
+      ],
+    },
+    {
+      name: "Shadcn UI",
+      icon: ShadCnUI,
+      description:
+        "<strong>Shadcn UI</strong> integration. Table, Form, Layout, Notification and CRUD components.",
+      url: "https://npmjs.com/package/@ferdiunal/refine-shadcn",
+      status: "stable",
+      contributors: [
+        {
+          name: "ferdiunal",
+          url: "https://github.com/ferdiunal",
         },
       ],
     },

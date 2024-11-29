@@ -8,8 +8,11 @@ import {
   useTranslate,
 } from "@hooks";
 
-import { DivPropsType, FormPropsType } from "../..";
-import { ForgotPasswordFormTypes, ForgotPasswordPageProps } from "../../types";
+import type { DivPropsType, FormPropsType } from "../..";
+import type {
+  ForgotPasswordFormTypes,
+  ForgotPasswordPageProps,
+} from "../../types";
 
 type ForgotPasswordProps = ForgotPasswordPageProps<
   DivPropsType,
@@ -24,6 +27,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
   renderContent,
   formProps,
   title = undefined,
+  mutationVariables,
 }) => {
   const translate = useTranslate();
   const routerType = useRouterType();
@@ -50,7 +54,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          forgotPassword({ email });
+          forgotPassword({ ...mutationVariables, email });
         }}
         {...formProps}
       >

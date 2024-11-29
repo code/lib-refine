@@ -1,5 +1,5 @@
 import {
-  HttpError,
+  type HttpError,
   getDefaultFilter,
   useGo,
   useNavigation,
@@ -12,7 +12,7 @@ import {
   useSelect,
   useTable,
 } from "@refinedev/antd";
-import { ICategory, IProduct } from "../../../interfaces";
+import type { ICategory, IProduct } from "../../../interfaces";
 import {
   Avatar,
   Button,
@@ -62,7 +62,7 @@ export const ProductListTable = () => {
     },
   });
 
-  const { selectProps: categorySelectProps, queryResult } =
+  const { selectProps: categorySelectProps, query: queryResult } =
     useSelect<ICategory>({
       resource: "categories",
       optionLabel: "title",

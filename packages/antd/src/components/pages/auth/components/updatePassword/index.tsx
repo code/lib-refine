@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  UpdatePasswordPageProps,
-  UpdatePasswordFormTypes,
+  type UpdatePasswordPageProps,
+  type UpdatePasswordFormTypes,
   useActiveAuthProvider,
 } from "@refinedev/core";
 import {
@@ -13,9 +13,9 @@ import {
   Form,
   Input,
   Button,
-  LayoutProps,
-  CardProps,
-  FormProps,
+  type LayoutProps,
+  type CardProps,
+  type FormProps,
   theme,
 } from "antd";
 import { useTranslate, useUpdatePassword } from "@refinedev/core";
@@ -46,6 +46,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm<UpdatePasswordFormTypes>();
@@ -96,7 +97,9 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
       <Form<UpdatePasswordFormTypes>
         layout="vertical"
         form={form}
-        onFinish={(values) => updatePassword(values)}
+        onFinish={(values) =>
+          updatePassword({ ...values, ...mutationVariables })
+        }
         requiredMark={false}
         {...formProps}
       >

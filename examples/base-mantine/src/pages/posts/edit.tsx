@@ -2,14 +2,14 @@ import { Edit, useForm, useSelect } from "@refinedev/mantine";
 import { Select, TextInput, Text, MultiSelect } from "@mantine/core";
 import MDEditor from "@uiw/react-md-editor";
 
-import { ICategory, ITag } from "../../interfaces";
+import type { ICategory, ITag } from "../../interfaces";
 
 export const PostEdit: React.FC = () => {
   const {
     saveButtonProps,
     getInputProps,
     errors,
-    refineCore: { queryResult, autoSaveProps },
+    refineCore: { query: queryResult, autoSaveProps },
   } = useForm({
     initialValues: {
       title: "",

@@ -15,7 +15,7 @@ import { Avatar, Flex, Input, Select, Table, Typography } from "antd";
 import { EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { API_URL } from "@/utils/constants";
 import { getRandomColorFromString } from "@/utils/get-random-color";
-import { Invoice } from "@/types";
+import type { Invoice } from "@/types";
 
 export const InvoicePageList = () => {
   const go = useGo();
@@ -115,7 +115,9 @@ export const InvoicePageList = () => {
                   src={src}
                   shape="square"
                   style={{
-                    backgroundColor: getRandomColorFromString(name),
+                    backgroundColor: src
+                      ? "none"
+                      : getRandomColorFromString(name || ""),
                   }}
                 >
                   <Typography.Text>{name?.[0]?.toUpperCase()}</Typography.Text>

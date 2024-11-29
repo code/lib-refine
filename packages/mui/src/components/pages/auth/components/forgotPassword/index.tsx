@@ -10,7 +10,7 @@ import MuiLink from "@mui/material/Link";
 import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 
-import {
+import type {
   ForgotPasswordFormTypes,
   ForgotPasswordPageProps,
 } from "@refinedev/core";
@@ -18,8 +18,8 @@ import { useForm } from "@refinedev/react-hook-form";
 import * as React from "react";
 
 import {
-  BaseRecord,
-  HttpError,
+  type BaseRecord,
+  type HttpError,
   useForgotPassword,
   useLink,
   useRouterContext,
@@ -28,7 +28,7 @@ import {
 } from "@refinedev/core";
 
 import { ThemedTitleV2 } from "@components";
-import { FormPropsType } from "../../index";
+import type { FormPropsType } from "../../index";
 import { layoutStyles, titleStyles } from "../styles";
 
 type ForgotPasswordProps = ForgotPasswordPageProps<
@@ -48,6 +48,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
   renderContent,
   formProps,
   title,
+  mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
   const {
@@ -107,7 +108,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
               return onSubmit(data);
             }
 
-            return mutate(data);
+            return mutate({ ...mutationVariables, ...data });
           })}
         >
           <TextField
@@ -140,8 +141,11 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
             <Box textAlign="right" sx={{ mt: "24px" }}>
               <Typography variant="body2" component="span" fontSize="12px">
                 {translate(
-                  "pages.register.buttons.haveAccount",
-                  "Have an account?",
+                  "pages.forgotPassword.buttons.haveAccount",
+                  translate(
+                    "pages.register.buttons.haveAccount",
+                    "Have an account? ",
+                  ),
                 )}
               </Typography>{" "}
               <MuiLink
@@ -153,7 +157,10 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
                 fontSize="12px"
                 color="primary.light"
               >
-                {translate("pages.login.signin", "Sign in")}
+                {translate(
+                  "pages.forgotPassword.signin",
+                  translate("pages.login.signin", "Sign in"),
+                )}
               </MuiLink>
             </Box>
           )}

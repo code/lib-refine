@@ -80,7 +80,7 @@ However, we can use [normalizeData](https://github.com/refinedev/refine/blob/27a
 
 :::caution
 
-To make this example more visual, we used the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/refine-antd) package. If you are using Refine headless, you need to provide the components, hooks, or helpers imported from the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/refine-antd) package.
+To make this example more visual, we used the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/antd) package. If you are using Refine headless, you need to provide the components, hooks, or helpers imported from the [`@refinedev/antd`](https://github.com/refinedev/refine/tree/master/packages/antd) package.
 
 :::
 
@@ -918,13 +918,13 @@ render(<App />);
 When creating and editing posts you can use these API parameters in `meta`:
 
 ```tsx
-const { formProps, saveButtonProps, queryResult } = useForm<IPost>({
+const { formProps, saveButtonProps, query } = useForm<IPost>({
   meta: { publicationState: "preview" },
 });
 ```
 
 ```tsx title="EditList.tsx"
-const { formProps, saveButtonProps, queryResult } = useForm<IPost>({
+const { formProps, saveButtonProps, query } = useForm<IPost>({
   meta: { populate: ["category", "cover"] },
 });
 ```
@@ -1204,7 +1204,7 @@ By default, `@refinedev/strapi-v4` transforms the error response from Strapi int
 
 Thus, `useForm` will automatically set the error message for each field that has a validation error.
 
-[Refer to the server-side form validation documentation for more information &#8594 ](/docs/advanced-tutorials/forms/server-side-form-validation).
+[Refer to the server-side form validation documentation for more information &#8594 ](/docs/guides-concepts/forms/#server-side-validation-).
 
 ## Example
 
